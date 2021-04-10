@@ -1,0 +1,53 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/DMux4Way.hdl
+
+/**
+ * 4-way demultiplexor:
+ * {a, b, c, d} = {in, 0, 0, 0} if sel == 00
+ *                {0, in, 0, 0} if sel == 01
+ *                {0, 0, in, 0} if sel == 10
+ *                {0, 0, 0, in} if sel == 11
+ */
+
+CHIP Mux8Way {
+    IN a, b, c, d, e, f, g, h, sel[3];
+    OUT out;
+
+    PARTS:
+    Not(in=sel[2], out=notsel2);
+    Not(in=sel[1], out=notsel1);
+    Not(in=sel[0], out=notsel0);
+    Or(a=sel[2], b=sel[1], out=or1);
+    Nor(a=or1, b=sel[0], out=sela);
+    Or(a=sel[2], b=sel[1], out=or2);
+    Nor(a=or2, b=notsel0, out=selb);
+    Or(a=sel[2], b=notsel1, out=or3);
+    Nor(a=or3, b=sel[0], out=selc);
+    Or(a=sel[2], b=notsel1, out=or4);
+    Nor(a=or4, b=notsel0, out=seld);
+    Or(a=notsel2, b=sel[1], out=or5);
+    Nor(a=or5, b=sel[0], out=sele);
+    Or(a=notsel2, b=sel[1], out=or6);
+    Nor(a=or6, b=notsel0, out=self);
+    Or(a=notsel2, b=notsel1, out=or7);
+    Nor(a=or7, b=sel[0], out=selg);
+    Or(a=notsel2, b=notsel1, out=or8);
+    Nor(a=or8, b=notsel0, out=selh);
+    And(a=sela, b=a, out=anda);
+    And(a=selb, b=b, out=andb);
+    And(a=selc, b=c, out=andc);
+    And(a=seld, b=d, out=andd);
+    And(a=sele, b=e, out=ande);
+    And(a=self, b=f, out=andf);
+    And(a=selg, b=g, out=andg);
+    And(a=selh, b=h, out=andh);
+    Or(a=anda, b=andb, out=orab);
+    Or(a=orab, b=andc, out=orc);
+    Or(a=orc, b= andd, out=ord);
+    Or(a=ord, b= ande, out=ore);
+    Or(a=ore, b= andf, out=orf);
+    Or(a=orf, b= andg, out=org);
+    Or(a=org, b= andh, out=out);
+}
