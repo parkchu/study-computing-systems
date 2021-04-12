@@ -20,3 +20,4 @@ CHIP Bit {
     Or(a=and1, b=and2, out=or1);
     DFF(in=or1, out=out, out=loop1);
 }
+
