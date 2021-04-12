@@ -15,5 +15,40 @@ CHIP RAM8 {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Not(in=address[2], out=notaddress2);
+    Not(in=address[1], out=notaddress1);
+    Not(in=address[0], out=notaddress0);
+    Or(a=address[2], b=address[1], out=or1);
+    Or(a=address[2], b=address[1], out=or2);
+    Or(a=address[2], b=notaddress1, out=or3);
+    Or(a=address[2], b=notaddress1, out=or4);
+    Or(a=notaddress2, b=address[1], out=or5);
+    Or(a=notaddress2, b=address[1], out=or6);
+    Or(a=notaddress2, b=notaddress1, out=or7);
+    Or(a=notaddress2, b=notaddress1, out=or8);
+    Nor(a=or1, b=address[0], out=addressa);
+    Nor(a=or2, b=notaddress0, out=addressb);
+    Nor(a=or3, b=address[0], out=addressc);
+    Nor(a=or4, b=notaddress0, out=addressd);
+    Nor(a=or5, b=address[0], out=addresse);
+    Nor(a=or6, b=notaddress0, out=addressf);
+    Nor(a=or7, b=address[0], out=addressg);
+    Nor(a=or8, b=notaddress0, out=addressh);
+    And(a=load, b=addressa, out=loada);
+    And(a=load, b=addressb, out=loadb);
+    And(a=load, b=addressc, out=loadc);
+    And(a=load, b=addressd, out=loadd);
+    And(a=load, b=addresse, out=loade);
+    And(a=load, b=addressf, out=loadf);
+    And(a=load, b=addressg, out=loadg);
+    And(a=load, b=addressh, out=loadh);
+    Register(in=in, load=loada, out=register1);
+    Register(in=in, load=loadb, out=register2);
+    Register(in=in, load=loadc, out=register3);
+    Register(in=in, load=loadd, out=register4);
+    Register(in=in, load=loade, out=register5);
+    Register(in=in, load=loadf, out=register6);
+    Register(in=in, load=loadg, out=register7);
+    Register(in=in, load=loadh, out=register8);
+    Mux8Way16(a=register1, b=register2, c=register3, d=register4, e=register5, f=register6, g=register7, h=register8, sel=address, out=out);
 }
