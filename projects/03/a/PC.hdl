@@ -16,5 +16,12 @@ CHIP PC {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Not(in=load, out=notload);
+    Not(in=reset, out=notreset);
+    Add16(a=loop, b[0]=inc, out=incout);
+    And16-1(a=in, b=load, out=and1);
+    And16-1(a=incout, b=notload, out=and2);
+    Or16(a=and1, b=and2, out=loadout);
+    And16-1(a=loadout, b=notreset, out=resetout);
+    DFF16(in=resetout, out=out, out=loop);
 }

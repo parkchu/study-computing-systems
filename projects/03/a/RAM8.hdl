@@ -15,25 +15,7 @@ CHIP RAM8 {
     OUT out[16];
 
     PARTS:
-    Not(in=address[2], out=notaddress2);
-    Not(in=address[1], out=notaddress1);
-    Not(in=address[0], out=notaddress0);
-    Or(a=address[2], b=address[1], out=or1);
-    Or(a=address[2], b=address[1], out=or2);
-    Or(a=address[2], b=notaddress1, out=or3);
-    Or(a=address[2], b=notaddress1, out=or4);
-    Or(a=notaddress2, b=address[1], out=or5);
-    Or(a=notaddress2, b=address[1], out=or6);
-    Or(a=notaddress2, b=notaddress1, out=or7);
-    Or(a=notaddress2, b=notaddress1, out=or8);
-    Nor(a=or1, b=address[0], out=addressa);
-    Nor(a=or2, b=notaddress0, out=addressb);
-    Nor(a=or3, b=address[0], out=addressc);
-    Nor(a=or4, b=notaddress0, out=addressd);
-    Nor(a=or5, b=address[0], out=addresse);
-    Nor(a=or6, b=notaddress0, out=addressf);
-    Nor(a=or7, b=address[0], out=addressg);
-    Nor(a=or8, b=notaddress0, out=addressh);
+    DMux8Way(in=true, sel=address, a=addressa, b=addressb, c=addressc, d=addressd, e=addresse, f=addressf, g=addressg, h=addressh);
     And(a=load, b=addressa, out=loada);
     And(a=load, b=addressb, out=loadb);
     And(a=load, b=addressc, out=loadc);

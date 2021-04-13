@@ -15,5 +15,6 @@ CHIP RAM64 {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    DMux8Way(in=true, sel=address[3..5], a=addressa, b=addressb, c=addressc, d=addressd, e=addresse, f=addressf, g=addressg, h=addressh);
+
 }
