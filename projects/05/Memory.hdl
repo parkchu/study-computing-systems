@@ -27,5 +27,21 @@ CHIP Memory {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Not(in=address[14], out=notaddress14);
+    And(a=load, b=notaddress14, out=load16k);
+    RAM16K(in=in, load=load16k, address=address[0..13], out=out16k);
+    And16-1(a=out16k, b=notaddress14, out=result16k);
+    Nor(a=notaddress14, b=address[13], out=nor8k);
+    And(a=load, b=nor8k, out=load8k);
+    Screen(in=in, load=load8k, address=address[0..12], out=out8k);
+    And16-1(a=out8k, b=nor8k, out=result8k);
+    And(a=address[14], b=address[13], out=and1);
+    Or8Way(in=address[0..7], out=or07);
+    Or8Way(in[0..4]=address[8..12], out=or812);
+    Nor(a=or07, b=or812, out=nor1);
+    And(a=and1, b=nor1, out=and2);
+    Keyboard(out=out1);
+    And16-1(a=out1, b=and2, out=result1);
+    Or16(a=result16k, b=result8k, out=out168);
+    Or16(a=out168, b=result1, out=out);
 }
