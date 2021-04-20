@@ -39,5 +39,33 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-    // Put your code here:
+    Not(in=instruction[15], out=notins15);
+    Or16-1(a=instruction, b=instruction[15], out=orins1);
+    Or16-1(a=loopA, b=notins15, out=orloopA);
+    And16(a=orins1, b=orloopA, out=andA);
+    And16-1(a=andA, b=notins15, out=resultA);
+
+    Not(in=instruction[12], out=notins12);
+    Or16-1(a=loopA, b=instruction[12], out=orA);
+    Or16-1(a=inM, b=notins12, out=orM);
+    And16(a=orA, b=orM, out=orAM);
+    ALU(x=loopD, y=orAM, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out=outALU, zr=zrALU, ng=ngALU);
+    And16-1(a=outALU, b=instruction[15], out=resultALU);
+    And16-1(a=resultALU, b=instruction[3], out=outM);
+    And(a=instruction[3], b=instruction[15], out=and315);
+    And(a=and315, b=instruction[15], out=writeM);
+    Or16(a=resultA, b=resultALU, out=inA);
+    Or(a=notins15, b=instruction[5], out=loadA);
+    And(a=instruction[4], b=instruction[15], out=loadD);
+    ARegister(in=inA, load=loadA, out=loopA, out[0..14]=addressM);
+    DRegister(in=resultALU, load=loadD , out=loopD);
+
+    Nor(a=zrALU, b=ngALU, out=orzrng);
+    And(a=instruction[0], b=orzrng, out=outj3);
+    And(a=instruction[1], b=zrALU, out=outj2);
+    And(a=instruction[2], b=ngALU, out=outj1);
+    Or(a=outj3, b=outj2, out=orj3j2);
+    Or(a=orj3j2, b=outj1, out=outloadPC);
+    And(a=outloadPC, b=instruction[15], out=loadPC);
+    PC(in=loopA, load=loadPC, inc=true, reset=reset, out[0..14]=pc); 
 }
