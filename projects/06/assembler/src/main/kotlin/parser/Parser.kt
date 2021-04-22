@@ -5,6 +5,7 @@ import java.io.File
 class Parser(file: File) {
     private var currentCommand: String = ""
     private val commands: MutableList<String> = changeFileToStringList(file).toMutableList()
+    private val step2Commands: MutableList<String> = mutableListOf()
 
     private fun changeFileToStringList(file: File): List<String> {
         val commands = file.readLines().map { removeUnnecessaryString(it).trim() }
@@ -20,10 +21,18 @@ class Parser(file: File) {
         }
     }
 
+    fun changeStep2() {
+        commands.addAll(step2Commands)
+    }
+
     fun hasMoreCommands(): Boolean = commands.isNotEmpty()
 
     fun advance() {
         currentCommand = commands.first()
+        val commandType = getCommandType()
+        if (commandType == CommandType.A_COMMAND || commandType == CommandType.C_COMMAND) {
+            step2Commands.add(currentCommand)
+        }
         commands.removeFirst()
     }
 

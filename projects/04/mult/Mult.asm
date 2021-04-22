@@ -24,7 +24,7 @@
 	@0
 	D=M
 	@2
-	M=M+D
+	M=D+M
 	@time
 	M=M+1
 	@LOOP
