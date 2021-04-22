@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="parser.ParserTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2021-04-22T04:57:25" hostname="nextstep.local" time="0.02">
+  <properties/>
+  <testcase name="다음 명령어 여부()" classname="parser.ParserTest" time="0.013"/>
+  <testcase name="계산 명령어 일때 값 얻기()" classname="parser.ParserTest" time="0.002"/>
+  <testcase name="다음 명령어로 넘기기()" classname="parser.ParserTest" time="0.001"/>
+  <testcase name="현재 명령어의 타입 조회()" classname="parser.ParserTest" time="0.001"/>
+  <testcase name="현재 명령어의 기호 얻기()" classname="parser.ParserTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

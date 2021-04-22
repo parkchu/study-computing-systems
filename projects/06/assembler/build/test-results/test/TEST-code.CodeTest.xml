@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="code.CodeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-04-22T04:57:24" hostname="nextstep.local" time="0.037">
+  <properties/>
+  <testcase name="comp 의 a 값이 상황에 맞게 변환되는지()" classname="code.CodeTest" time="0.037"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
