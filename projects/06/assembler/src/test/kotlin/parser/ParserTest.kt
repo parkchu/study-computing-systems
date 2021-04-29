@@ -1,6 +1,7 @@
 package parser
 
 import org.junit.jupiter.api.Test
+import org.springframework.core.io.ClassPathResource
 import java.io.File
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
@@ -10,7 +11,7 @@ import kotlin.test.assertTrue
 class ParserTest {
     @Test
     fun `다음 명령어 여부`() {
-        val file = File(TEST_ASM_FILE_PATH + "a-command.asm")
+        val file = TEST_ASM_FILE_A
         val parser = Parser(file)
 
         val result = parser.hasMoreCommands()
@@ -20,7 +21,7 @@ class ParserTest {
 
     @Test
     fun `다음 명령어로 넘기기`() {
-        val file = File(TEST_ASM_FILE_PATH + "a-command.asm")
+        val file = TEST_ASM_FILE_A
         val parser = Parser(file)
         parser.advance()
 
@@ -31,7 +32,7 @@ class ParserTest {
 
     @Test
     fun `현재 명령어의 타입 조회`() {
-        val file = File(TEST_ASM_FILE_PATH + "a-command.asm")
+        val file = TEST_ASM_FILE_A
         val parser = Parser(file)
         parser.advance()
 
@@ -42,8 +43,8 @@ class ParserTest {
 
     @Test
     fun `현재 명령어의 기호 얻기`() {
-        val fileA = File(TEST_ASM_FILE_PATH + "a-command.asm")
-        val fileL = File(TEST_ASM_FILE_PATH + "l-command.asm")
+        val fileA = TEST_ASM_FILE_A
+        val fileL = TEST_ASM_FILE_L
         val parserA = Parser(fileA)
         val parserL = Parser(fileL)
         parserA.advance()
@@ -58,7 +59,7 @@ class ParserTest {
 
     @Test
     fun `계산 명령어 일때 값 얻기`() {
-        val file = File(TEST_ASM_FILE_PATH + "c-command.asm")
+        val file = TEST_ASM_FILE_C
         val parser = Parser(file)
         parser.advance()
 
@@ -82,6 +83,8 @@ class ParserTest {
     }
 
     companion object {
-        const val TEST_ASM_FILE_PATH = "/Users/javajigi/Desktop/nand2tetris/projects/06/assembler/src/test/asm/"
+        val TEST_ASM_FILE_A: File = ClassPathResource("asm/a-command.asm").file
+        val TEST_ASM_FILE_C: File = ClassPathResource("asm/c-command.asm").file
+        val TEST_ASM_FILE_L: File = ClassPathResource("asm/l-command.asm").file
     }
 }

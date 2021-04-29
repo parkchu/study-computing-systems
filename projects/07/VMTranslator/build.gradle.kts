@@ -13,6 +13,7 @@ repositories {
 
 
 dependencies {
+    implementation("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.3.5.RELEASE")
     testImplementation(kotlin("test-junit"))
     testImplementation("org.assertj:assertj-core:3.11.1")
 }

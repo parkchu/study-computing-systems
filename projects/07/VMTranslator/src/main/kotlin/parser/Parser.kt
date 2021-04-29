@@ -29,9 +29,10 @@ class Parser(file: File) {
     }
 
     fun getCommandType(): CommandType {
-        val command = commandWords.first()
-        return CommandType.findByCommand(command)
+        return CommandType.findByCommand(getCommand())
     }
+
+    fun getCommand(): String = commandWords.first()
 
     fun getArg1(): String {
         val commandType = getCommandType()

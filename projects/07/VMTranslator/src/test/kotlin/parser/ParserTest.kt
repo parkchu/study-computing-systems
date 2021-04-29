@@ -2,6 +2,7 @@ package parser
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.springframework.core.io.ClassPathResource
 import java.io.File
 
 class ParserTest {
@@ -10,9 +11,15 @@ class ParserTest {
         val parser = Parser(FILE)
         parser.advance()
 
-        val commandType = parser.getCommandType()
+        val commandType1 = parser.getCommandType()
 
-        assertThat(commandType).isEqualTo(CommandType.C_PUSH)
+        assertThat(commandType1).isEqualTo(CommandType.C_PUSH)
+
+        parser.advance()
+
+        val commandType2 = parser.getCommandType()
+
+        assertThat(commandType2).isEqualTo(CommandType.C_ARITHMETIC)
     }
 
     @Test
@@ -36,6 +43,6 @@ class ParserTest {
     }
 
     companion object {
-        private val FILE = File("./src/test/kotlin/vm/test.vm")
+        val FILE: File = ClassPathResource("vm/test.vm").file
     }
 }

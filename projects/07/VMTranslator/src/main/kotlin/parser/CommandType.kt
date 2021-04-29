@@ -13,7 +13,7 @@ enum class CommandType(val command: String) {
 
     companion object {
         fun findByCommand(command: String): CommandType {
-            return values().find { it.command == command } ?: throw RuntimeException("해당 명령어는 지원하지 않습니다.")
+            return values().find { it.command.contains(command) } ?: throw RuntimeException("해당 명령어는 지원하지 않습니다.")
         }
     }
 }
