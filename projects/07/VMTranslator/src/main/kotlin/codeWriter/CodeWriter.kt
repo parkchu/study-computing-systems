@@ -4,14 +4,12 @@ import parser.CommandType
 import java.io.File
 
 class CodeWriter(file: File) {
-    private val parentDirectoryPath: String = file.parent
     private val strings: MutableList<String> = mutableListOf()
-    var outputFile: File? = File("$parentDirectoryPath/${file.nameWithoutExtension}.asm")
+    var outputFile: File? = File("${file.parent}/${file.nameWithoutExtension}.asm")
         private set
 
-    fun setFileName(fileName: String) {
-        val path = "$parentDirectoryPath/$fileName.asm"
-        outputFile = File(path)
+    fun setFileName(path: String, fileName: String) {
+        outputFile = File("$path/$fileName.asm")
     }
 
     fun writeArithmetic(command: String) {
@@ -59,26 +57,88 @@ class CodeWriter(file: File) {
             strings.addAll(strings1 + strings2)
         }
         if (commandType == CommandType.C_POP) {
-            val strings2 = listOf("@SP", "AM=M-1", "D=M", "M=0")
             val strings1 = makeStringsBySegmentWhenPop(segment, index)
-            strings.addAll(strings2 + strings1)
+            val strings2 = listOf("@SP", "AM=M-1", "D=M", "M=0", "@13", "A=M", "M=D")
+            strings.addAll(strings1 + strings2)
         }
     }
 
     private fun makeStringsBySegmentWhenPush(segment: String, index: Int): List<String> {
-        if (segment == "constant") {
-            return listOf("@$index", "D=A")
+        return when (segment) {
+            "constant" -> {
+                listOf("@$index", "D=A")
+            }
+            "local" -> {
+                makeStringsBySegmentAndIndexWhenPush("@LCL", index)
+            }
+            "argument" -> {
+                makeStringsBySegmentAndIndexWhenPush("@ARG", index)
+            }
+            "this" -> {
+                makeStringsBySegmentAndIndexWhenPush("@THIS", index)
+            }
+            "that" -> {
+                makeStringsBySegmentAndIndexWhenPush("@THAT", index)
+            }
+            "pointer" -> {
+                makeStringsBySegmentAndIndexWhenPush("@3", index, "A")
+            }
+            "temp" -> {
+                makeStringsBySegmentAndIndexWhenPush("@5", index, "A")
+            }
+            "static" -> {
+                listOf("@${outputFile?.nameWithoutExtension}.$index", "D=M")
+            }
+            else -> {
+                throw RuntimeException("지원하지 않는 세그먼트 입니다.")
+            }
         }
-        return listOf()
+    }
+
+    private fun makeStringsBySegmentAndIndexWhenPush(segment: String, index: Int, register: String = "M"): List<String> {
+        return listOf(segment, "D=$register", "@$index", "A=D+A", "D=M")
     }
 
     private fun makeStringsBySegmentWhenPop(segment: String, index: Int): List<String> {
-        return listOf()
+        return when (segment) {
+            "constant" -> {
+                listOf("@$index", "A=D")
+            }
+            "local" -> {
+                makeStringsBySegmentAndIndexWhenPop("@LCL", index)
+            }
+            "argument" -> {
+                makeStringsBySegmentAndIndexWhenPop("@ARG", index)
+            }
+            "this" -> {
+                makeStringsBySegmentAndIndexWhenPop("@THIS", index)
+            }
+            "that" -> {
+                makeStringsBySegmentAndIndexWhenPop("@THAT", index)
+            }
+            "pointer" -> {
+                makeStringsBySegmentAndIndexWhenPop("@3", index, "A")
+            }
+            "temp" -> {
+                makeStringsBySegmentAndIndexWhenPop("@5", index, "A")
+            }
+            "static" -> {
+                listOf("@${outputFile?.nameWithoutExtension}.$index", "D=A", "@13", "M=D")
+            }
+            else -> {
+                throw RuntimeException("지원하지 않는 세그먼트 입니다.")
+            }
+        }
+    }
+
+    private fun makeStringsBySegmentAndIndexWhenPop(segment: String, index: Int, register: String = "M"): List<String> {
+        return listOf(segment, "D=$register", "@$index", "D=D+A", "@13", "M=D")
     }
 
     fun close() {
         write()
         outputFile = null
+        strings.clear()
     }
 
     private fun write() {

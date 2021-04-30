@@ -6,14 +6,17 @@ import parser.Parser
 import java.io.File
 
 object VMTranslator {
-    fun translator(file: File) {
-        val parser = Parser(file)
-        val codeWriter = CodeWriter(file)
-        while (parser.hasMoreCommands()) {
-            parser.advance()
-            writeFile(parser, codeWriter)
+    fun translator(files: List<File>) {
+        val codeWriter = CodeWriter(files.first())
+        files.forEach {
+            val parser = Parser(it)
+            codeWriter.setFileName(it.parent, it.nameWithoutExtension)
+            while (parser.hasMoreCommands()) {
+                parser.advance()
+                writeFile(parser, codeWriter)
+            }
+            codeWriter.close()
         }
-        codeWriter.close()
     }
 
     private fun writeFile(parser: Parser, codeWriter: CodeWriter) {

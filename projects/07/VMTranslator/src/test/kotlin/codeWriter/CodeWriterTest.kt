@@ -9,7 +9,7 @@ class CodeWriterTest {
     fun setFileName() {
         val codeWriter = CodeWriter(FILE)
 
-        codeWriter.setFileName("test")
+        codeWriter.setFileName(FILE.parent, "test")
 
         assertThat(codeWriter.outputFile?.name).isEqualTo("test.asm")
     }
