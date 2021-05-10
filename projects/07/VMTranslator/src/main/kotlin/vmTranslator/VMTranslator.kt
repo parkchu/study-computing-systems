@@ -24,8 +24,11 @@ object VMTranslator {
         if (commandType == CommandType.C_ARITHMETIC) {
             codeWriter.writeArithmetic(parser.getCommand())
         }
-        if (commandType == CommandType.C_PUSH || commandType == CommandType.C_POP) {
-            codeWriter.writePushPop(commandType, parser.getArg1(), parser.getArg2())
+        if (commandType == CommandType.C_PUSH) {
+            codeWriter.writePush(parser.getArg1(), parser.getArg2())
+        }
+        if (commandType == CommandType.C_POP) {
+            codeWriter.writePop(parser.getArg1(), parser.getArg2())
         }
     }
 }

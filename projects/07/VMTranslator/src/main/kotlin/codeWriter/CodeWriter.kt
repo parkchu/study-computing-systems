@@ -1,6 +1,5 @@
 package codeWriter
 
-import parser.CommandType
 import java.io.File
 
 class CodeWriter(file: File) {
@@ -13,126 +12,24 @@ class CodeWriter(file: File) {
     }
 
     fun writeArithmetic(command: String) {
-        when (command) {
-            "add" -> writeAddSubAndOr("M=M+D")
-
-            "sub" -> writeAddSubAndOr("M=M-D")
-
-            "and" -> writeAddSubAndOr("M=M&D")
-
-            "or" -> writeAddSubAndOr("M=M|D")
-
-            "neg" -> writeNegNot("M=-M")
-
-            "not" -> writeNegNot("M=!M")
-
-            "eq" -> writeEqGtLt("D;JEQ", "D;JNE")
-
-            "gt" -> writeEqGtLt("D;JGT", "D;JLE")
-
-            "lt" -> writeEqGtLt("D;JLT", "D;JGE")
-        }
+        val arithmeticCommand = ArithmeticCommand(strings).makeArithmeticCommand(command)
+        strings.addAll(arithmeticCommand)
     }
 
-    private fun writeAddSubAndOr(command: String) {
-        strings.addAll(listOf("@SP", "AM=M-1", "D=M", "M=0", "A=A-1"))
-        strings.add(command)
+    fun writePush(segment: String, index: Int) {
+        val fileName = outputFile?.nameWithoutExtension ?: throw RuntimeException("파일이 설정되어 있지 않습니다.")
+        val pushCommand = PushCommand(index, fileName)
+        val strings1 = pushCommand.makePushCommand(segment)
+        val strings2 = listOf("@SP", "A=M", "M=D", "@SP", "M=M+1")
+        strings.addAll(strings1 + strings2)
     }
 
-    private fun writeNegNot(command: String) {
-        strings.addAll(listOf("@SP", "A=M-1"))
-        strings.add(command)
-    }
-
-    private fun writeEqGtLt(jump1: String, jump2: String) {
-        strings.addAll(listOf("@${strings.size + 14}", "D=A", "@address", "M=D"))
-        writeAddSubAndOr("D=M-D")
-        strings.addAll(listOf("@TRUE", jump1, "@FALSE", jump2))
-    }
-
-    fun writePushPop(commandType: CommandType, segment: String, index: Int) {
-        if (commandType == CommandType.C_PUSH) {
-            val strings1 = makeStringsBySegmentWhenPush(segment, index)
-            val strings2 = listOf("@SP", "A=M", "M=D", "@SP", "M=M+1")
-            strings.addAll(strings1 + strings2)
-        }
-        if (commandType == CommandType.C_POP) {
-            val strings1 = makeStringsBySegmentWhenPop(segment, index)
-            val strings2 = listOf("@SP", "AM=M-1", "D=M", "M=0", "@13", "A=M", "M=D")
-            strings.addAll(strings1 + strings2)
-        }
-    }
-
-    private fun makeStringsBySegmentWhenPush(segment: String, index: Int): List<String> {
-        return when (segment) {
-            "constant" -> {
-                listOf("@$index", "D=A")
-            }
-            "local" -> {
-                makeStringsBySegmentAndIndexWhenPush("@LCL", index)
-            }
-            "argument" -> {
-                makeStringsBySegmentAndIndexWhenPush("@ARG", index)
-            }
-            "this" -> {
-                makeStringsBySegmentAndIndexWhenPush("@THIS", index)
-            }
-            "that" -> {
-                makeStringsBySegmentAndIndexWhenPush("@THAT", index)
-            }
-            "pointer" -> {
-                makeStringsBySegmentAndIndexWhenPush("@3", index, "A")
-            }
-            "temp" -> {
-                makeStringsBySegmentAndIndexWhenPush("@5", index, "A")
-            }
-            "static" -> {
-                listOf("@${outputFile?.nameWithoutExtension}.$index", "D=M")
-            }
-            else -> {
-                throw RuntimeException("지원하지 않는 세그먼트 입니다.")
-            }
-        }
-    }
-
-    private fun makeStringsBySegmentAndIndexWhenPush(segment: String, index: Int, register: String = "M"): List<String> {
-        return listOf(segment, "D=$register", "@$index", "A=D+A", "D=M")
-    }
-
-    private fun makeStringsBySegmentWhenPop(segment: String, index: Int): List<String> {
-        return when (segment) {
-            "constant" -> {
-                listOf("@$index", "A=D")
-            }
-            "local" -> {
-                makeStringsBySegmentAndIndexWhenPop("@LCL", index)
-            }
-            "argument" -> {
-                makeStringsBySegmentAndIndexWhenPop("@ARG", index)
-            }
-            "this" -> {
-                makeStringsBySegmentAndIndexWhenPop("@THIS", index)
-            }
-            "that" -> {
-                makeStringsBySegmentAndIndexWhenPop("@THAT", index)
-            }
-            "pointer" -> {
-                makeStringsBySegmentAndIndexWhenPop("@3", index, "A")
-            }
-            "temp" -> {
-                makeStringsBySegmentAndIndexWhenPop("@5", index, "A")
-            }
-            "static" -> {
-                listOf("@${outputFile?.nameWithoutExtension}.$index", "D=A", "@13", "M=D")
-            }
-            else -> {
-                throw RuntimeException("지원하지 않는 세그먼트 입니다.")
-            }
-        }
-    }
-
-    private fun makeStringsBySegmentAndIndexWhenPop(segment: String, index: Int, register: String = "M"): List<String> {
-        return listOf(segment, "D=$register", "@$index", "D=D+A", "@13", "M=D")
+    fun writePop(segment: String, index: Int) {
+        val fileName = outputFile?.nameWithoutExtension ?: throw RuntimeException("파일이 설정되어 있지 않습니다.")
+        val popCommand = PopCommand(index, fileName)
+        val strings1 = popCommand.makePopCommand(segment)
+        val strings2 = listOf("@SP", "AM=M-1", "D=M", "M=0", "@13", "A=M", "M=D")
+        strings.addAll(strings1 + strings2)
     }
 
     fun close() {
