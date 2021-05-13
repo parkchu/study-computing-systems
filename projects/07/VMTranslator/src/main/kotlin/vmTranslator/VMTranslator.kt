@@ -6,9 +6,8 @@ import parser.Parser
 import java.io.File
 
 object VMTranslator {
-    fun translator(files: List<File>) {
-        val filePath = "${files.first().parent}/main.asm"
-        val codeWriter = CodeWriter(filePath)
+    fun translator(files: List<File>, fileName: String) {
+        val codeWriter = CodeWriter("${files.first().parent}/$fileName.asm")
         files.forEach {
             val parser = Parser(it)
             codeWriter.setFileName(it.nameWithoutExtension)
@@ -30,6 +29,15 @@ object VMTranslator {
         }
         if (commandType == CommandType.C_POP) {
             codeWriter.writePop(parser.getArg1(), parser.getArg2())
+        }
+        if (commandType == CommandType.C_LABEL) {
+            codeWriter.writeLabel(parser.getArg1())
+        }
+        if (commandType == CommandType.C_GOTO) {
+            codeWriter.writeGoto(parser.getArg1())
+        }
+        if (commandType == CommandType.C_IF) {
+            codeWriter.writeIf(parser.getArg1())
         }
     }
 }

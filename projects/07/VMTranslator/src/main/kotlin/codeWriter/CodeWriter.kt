@@ -6,6 +6,7 @@ class CodeWriter(filePath: String) {
     private val strings: MutableList<String> = mutableListOf()
     private val outputFile = File(filePath)
     private var currentFileName: String? = null
+    private var functionName: String = ""
 
     fun setFileName(fileName: String) {
         currentFileName = fileName
@@ -30,6 +31,28 @@ class CodeWriter(filePath: String) {
         val strings1 = popCommand.makePopCommand(segment)
         val strings2 = listOf("@SP", "AM=M-1", "D=M", "M=0", "@13", "A=M", "M=D")
         strings.addAll(strings1 + strings2)
+    }
+
+    /*
+    fun writeInit() {
+        val commands = listOf("@256", "D=A", "@SP", "M=D")
+        writeCall("Sys.init")
+    }
+     */
+
+    fun writeLabel(label: String) {
+        val command = "($functionName$$label)"
+        strings.add(command)
+    }
+
+    fun writeGoto(label: String) {
+        val commands = listOf("@$functionName$$label", "0;JMP")
+        strings.addAll(commands)
+    }
+
+    fun writeIf(label: String) {
+        val commands = listOf("@SP", "AM=M-1", "D=M", "M=0", "@$functionName$$label", "D;JNE")
+        strings.addAll(commands)
     }
 
     fun close() {
