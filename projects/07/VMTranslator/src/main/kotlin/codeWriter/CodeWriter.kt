@@ -2,13 +2,13 @@ package codeWriter
 
 import java.io.File
 
-class CodeWriter(file: File) {
+class CodeWriter(filePath: String) {
     private val strings: MutableList<String> = mutableListOf()
-    var outputFile: File? = File("${file.parent}/${file.nameWithoutExtension}.asm")
-        private set
+    private val outputFile = File(filePath)
+    private var currentFileName: String? = null
 
-    fun setFileName(path: String, fileName: String) {
-        outputFile = File("$path/$fileName.asm")
+    fun setFileName(fileName: String) {
+        currentFileName = fileName
     }
 
     fun writeArithmetic(command: String) {
@@ -17,7 +17,7 @@ class CodeWriter(file: File) {
     }
 
     fun writePush(segment: String, index: Int) {
-        val fileName = outputFile?.nameWithoutExtension ?: throw RuntimeException("파일이 설정되어 있지 않습니다.")
+        val fileName = currentFileName ?: throw RuntimeException("파일이 설정되어 있지 않습니다.")
         val pushCommand = PushCommand(index, fileName)
         val strings1 = pushCommand.makePushCommand(segment)
         val strings2 = listOf("@SP", "A=M", "M=D", "@SP", "M=M+1")
@@ -25,7 +25,7 @@ class CodeWriter(file: File) {
     }
 
     fun writePop(segment: String, index: Int) {
-        val fileName = outputFile?.nameWithoutExtension ?: throw RuntimeException("파일이 설정되어 있지 않습니다.")
+        val fileName = currentFileName ?: throw RuntimeException("파일이 설정되어 있지 않습니다.")
         val popCommand = PopCommand(index, fileName)
         val strings1 = popCommand.makePopCommand(segment)
         val strings2 = listOf("@SP", "AM=M-1", "D=M", "M=0", "@13", "A=M", "M=D")
@@ -34,14 +34,13 @@ class CodeWriter(file: File) {
 
     fun close() {
         write()
-        outputFile = null
+        currentFileName = null
         strings.clear()
     }
 
     private fun write() {
-        val file = outputFile ?: throw RuntimeException("입력할 파일이 없습니다.")
         writeBasicCommand()
-        file.bufferedWriter().use { writer ->
+        outputFile.bufferedWriter().use { writer ->
             strings.forEach {
                 writer.write(it)
                 writer.newLine()
