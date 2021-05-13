@@ -7,16 +7,17 @@ import java.io.File
 
 object VMTranslator {
     fun translator(files: List<File>) {
-        val codeWriter = CodeWriter(files.first())
+        val filePath = "${files.first().parent}/main.asm"
+        val codeWriter = CodeWriter(filePath)
         files.forEach {
             val parser = Parser(it)
-            codeWriter.setFileName(it.parent, it.nameWithoutExtension)
+            codeWriter.setFileName(it.nameWithoutExtension)
             while (parser.hasMoreCommands()) {
                 parser.advance()
                 writeFile(parser, codeWriter)
             }
-            codeWriter.close()
         }
+        codeWriter.close()
     }
 
     private fun writeFile(parser: Parser, codeWriter: CodeWriter) {
