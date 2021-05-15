@@ -1,6 +1,6 @@
 package codeWriter
 
-class ArithmeticCommand(strings: List<String>) {
+class ArithmeticCommand(size: Int) {
     private val commands: Map<String, List<String>> = mapOf(
         "add" to writeAddSubAndOr("M=M+D"),
         "sub" to writeAddSubAndOr("M=M-D"),
@@ -8,9 +8,9 @@ class ArithmeticCommand(strings: List<String>) {
         "or" to writeAddSubAndOr("M=M|D"),
         "neg" to writeNegNot("M=-M"),
         "not" to writeNegNot("M=!M"),
-        "eq" to writeEqGtLt(strings.size, "D;JEQ", "D;JNE"),
-        "gt" to writeEqGtLt(strings.size, "D;JGT", "D;JLE"),
-        "lt" to writeEqGtLt(strings.size,"D;JLT", "D;JGE")
+        "eq" to writeEqGtLt(size, "D;JEQ", "D;JNE"),
+        "gt" to writeEqGtLt(size, "D;JGT", "D;JLE"),
+        "lt" to writeEqGtLt(size,"D;JLT", "D;JGE")
     )
 
     private fun writeAddSubAndOr(command: String) = listOf("@SP", "AM=M-1", "D=M", "M=0", "A=A-1", command)

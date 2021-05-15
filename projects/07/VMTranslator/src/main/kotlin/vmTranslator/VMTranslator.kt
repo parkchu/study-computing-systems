@@ -8,6 +8,7 @@ import java.io.File
 object VMTranslator {
     fun translator(files: List<File>, fileName: String) {
         val codeWriter = CodeWriter("${files.first().parent}/$fileName.asm")
+        codeWriter.writeInit()
         files.forEach {
             val parser = Parser(it)
             codeWriter.setFileName(it.nameWithoutExtension)
@@ -38,6 +39,15 @@ object VMTranslator {
         }
         if (commandType == CommandType.C_IF) {
             codeWriter.writeIf(parser.getArg1())
+        }
+        if (commandType == CommandType.C_CALL) {
+            codeWriter.writeCall(parser.getArg1(), parser.getArg2())
+        }
+        if (commandType == CommandType.C_FUNCTION) {
+            codeWriter.writeFunction(parser.getArg1(), parser.getArg2())
+        }
+        if (commandType == CommandType.C_RETURN) {
+            codeWriter.writeReturn()
         }
     }
 }
