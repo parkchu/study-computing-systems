@@ -1,11 +1,24 @@
 package vmTranslator
 
 import codeWriter.CodeWriter
-import parser.CommandType
+import commands.*
 import parser.Parser
 import java.io.File
+import java.lang.RuntimeException
 
 object VMTranslator {
+    val commands = listOf(
+        ArithmeticCommand(),
+        PushCommand(),
+        PopCommand(),
+        LabelCommand(),
+        GotoCommand(),
+        IfCommand(),
+        CallCommand(),
+        FunctionCommand(),
+        ReturnCommand()
+    )
+
     fun translator(files: List<File>, fileName: String) {
         val codeWriter = CodeWriter("${files.first().parent}/$fileName.asm")
         codeWriter.writeInit()
@@ -22,32 +35,8 @@ object VMTranslator {
 
     private fun writeFile(parser: Parser, codeWriter: CodeWriter) {
         val commandType = parser.getCommandType()
-        if (commandType == CommandType.C_ARITHMETIC) {
-            codeWriter.writeArithmetic(parser.getCommand())
-        }
-        if (commandType == CommandType.C_PUSH) {
-            codeWriter.writePush(parser.getArg1(), parser.getArg2())
-        }
-        if (commandType == CommandType.C_POP) {
-            codeWriter.writePop(parser.getArg1(), parser.getArg2())
-        }
-        if (commandType == CommandType.C_LABEL) {
-            codeWriter.writeLabel(parser.getArg1())
-        }
-        if (commandType == CommandType.C_GOTO) {
-            codeWriter.writeGoto(parser.getArg1())
-        }
-        if (commandType == CommandType.C_IF) {
-            codeWriter.writeIf(parser.getArg1())
-        }
-        if (commandType == CommandType.C_CALL) {
-            codeWriter.writeCall(parser.getArg1(), parser.getArg2())
-        }
-        if (commandType == CommandType.C_FUNCTION) {
-            codeWriter.writeFunction(parser.getArg1(), parser.getArg2())
-        }
-        if (commandType == CommandType.C_RETURN) {
-            codeWriter.writeReturn()
-        }
+        val command = commands.find { it.isSupports(commandType) } ?: throw RuntimeException("지원하지 않는 명령어 입니다.")
+        val args = listOf(parser.getArg1(), parser.getArg2())
+        command.write(codeWriter, args)
     }
 }

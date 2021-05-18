@@ -32,22 +32,24 @@ class Parser(file: File) {
         return CommandType.findByCommand(getCommand())
     }
 
-    fun getCommand(): String = commandWords.first()
+    private fun getCommand(): String = commandWords.first()
 
     fun getArg1(): String {
         val commandType = getCommandType()
-        require(commandType != CommandType.C_RETURN) { throw RuntimeException("해당 명령어는 지원하지 않는 기능입니다.") }
-        require(commandWords[1].isNotEmpty()) { throw RuntimeException("잘못된 명령어 문장이 있습니다.") }
+        if (commandType == CommandType.C_RETURN) {
+            return ""
+        }
         if (commandType == CommandType.C_ARITHMETIC) {
             return commandWords.first()
         }
+        require(commandWords[1].isNotEmpty()) { throw RuntimeException("잘못된 명령어 문장이 있습니다.") }
         return commandWords[1]
     }
 
-    fun getArg2(): Int {
+    fun getArg2(): String {
         val commandTypes = listOf(CommandType.C_PUSH, CommandType.C_POP, CommandType.C_FUNCTION, CommandType.C_CALL)
         val commandType = getCommandType()
-        require(commandTypes.contains(commandType)) { throw RuntimeException("해당 명령어는 지원하지 않는 기능입니다.") }
-        return commandWords[2].toInt()
+        require(commandTypes.contains(commandType)) { return "" }
+        return commandWords[2]
     }
 }
