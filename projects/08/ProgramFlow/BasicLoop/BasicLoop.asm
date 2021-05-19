@@ -18,6 +18,7 @@ M=0
 @13
 A=M
 M=D
+($LOOP_START)
 @ARG
 D=M
 @0
@@ -103,6 +104,12 @@ A=M
 M=D
 @SP
 M=M+1
+@SP
+AM=M-1
+D=M
+M=0
+@$LOOP_START
+D;JNE
 @LCL
 D=M
 @0

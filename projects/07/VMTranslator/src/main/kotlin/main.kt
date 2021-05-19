@@ -6,5 +6,10 @@ fun main() {
     val filePath = readLine() ?: throw RuntimeException("파일 주소를 공백으로 입력하실순 없습니다.")
     val file = File(filePath.trim())
     val files = file.walkTopDown().toList().filter { it.extension == "vm" }
-    VMTranslator.translator(files)
+    val fileName = if (file.isDirectory) {
+        file.name
+    } else {
+        file.nameWithoutExtension
+    }
+    VMTranslator.translator(files, fileName)
 }

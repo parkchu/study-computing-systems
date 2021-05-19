@@ -1,34 +1,42 @@
 package vmTranslator
 
 import codeWriter.CodeWriter
-import parser.CommandType
+import commands.*
 import parser.Parser
 import java.io.File
+import java.lang.RuntimeException
 
 object VMTranslator {
-    fun translator(files: List<File>) {
-        val codeWriter = CodeWriter(files.first())
+    val commands = listOf(
+        ArithmeticCommand(),
+        PushCommand(),
+        PopCommand(),
+        LabelCommand(),
+        GotoCommand(),
+        IfCommand(),
+        CallCommand(),
+        FunctionCommand(),
+        ReturnCommand()
+    )
+
+    fun translator(files: List<File>, fileName: String) {
+        val codeWriter = CodeWriter("${files.first().parent}/$fileName.asm")
+        codeWriter.writeInit()
         files.forEach {
             val parser = Parser(it)
-            codeWriter.setFileName(it.parent, it.nameWithoutExtension)
+            codeWriter.setFileName(it.nameWithoutExtension)
             while (parser.hasMoreCommands()) {
                 parser.advance()
                 writeFile(parser, codeWriter)
             }
-            codeWriter.close()
         }
+        codeWriter.close()
     }
 
     private fun writeFile(parser: Parser, codeWriter: CodeWriter) {
         val commandType = parser.getCommandType()
-        if (commandType == CommandType.C_ARITHMETIC) {
-            codeWriter.writeArithmetic(parser.getCommand())
-        }
-        if (commandType == CommandType.C_PUSH) {
-            codeWriter.writePush(parser.getArg1(), parser.getArg2())
-        }
-        if (commandType == CommandType.C_POP) {
-            codeWriter.writePop(parser.getArg1(), parser.getArg2())
-        }
+        val command = commands.find { it.isSupports(commandType) } ?: throw RuntimeException("지원하지 않는 명령어 입니다.")
+        val args = listOf(parser.getArg1(), parser.getArg2())
+        command.write(codeWriter, args)
     }
 }
