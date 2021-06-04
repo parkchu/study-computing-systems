@@ -1,7 +1,7 @@
 package jackTokenizer
 
 class JackTokenizer(code: List<String>) {
-    val tokens = makeTokens(code).toMutableList()
+    private val tokens = makeTokens(code).toMutableList()
     private var _currentToken: Token? = null
     private val currentToken: Token
         get() = _currentToken ?: throw RuntimeException("토큰이 설정되지 않았습니다.")
@@ -40,7 +40,7 @@ class JackTokenizer(code: List<String>) {
             helper.makeToken(it)
         }
     }
-    /** Runs the game: handles the user's inputs and moves the square accordingly */
+
     private fun filterComment(tokens: List<Token>): List<Token> {
         val mainList = mutableListOf<Token>()
         val commentSymbols = mutableListOf<Token>()
@@ -89,4 +89,9 @@ class JackTokenizer(code: List<String>) {
     fun getIntVal(): Int = currentToken.value.toInt()
 
     fun getStringVal(): String = currentToken.value
+
+    fun getXMLString(): String {
+        val tokenType = getTokenType().value
+        return "<$tokenType> ${currentToken.value} </$tokenType>"
+    }
 }
