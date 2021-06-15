@@ -3,7 +3,7 @@ package jackTokenizer
 class JackTokenizer(code: List<String>) {
     private val tokens = TokensTool().make(code)
     private var _currentToken: Token? = null
-    private val currentToken: Token
+    val currentToken: Token
         get() = _currentToken ?: throw RuntimeException("토큰이 설정되지 않았습니다.")
 
     fun hasMoreTokens(): Boolean = tokens.isNotEmpty()

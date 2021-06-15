@@ -10,9 +10,7 @@ fun main () {
     files.forEach {
         val jackAnalyzer = JackAnalyzer(it)
         jackAnalyzer.write()
-    }
-    println("컴파일이 완료되었습니다.")
-    files.forEach {
         println("${it.nameWithoutExtension} : ${it.path}")
     }
+    println("컴파일이 완료되었습니다.")
 }

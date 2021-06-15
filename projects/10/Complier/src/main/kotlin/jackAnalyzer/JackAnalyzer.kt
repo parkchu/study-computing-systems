@@ -10,9 +10,9 @@ class JackAnalyzer(file: File) {
 
     fun write() {
         val compilationEngine = CompilationEngine(jackTokenizer)
-        val strings = compilationEngine.compileClass()
+        val codes = compilationEngine.compileClass()
         outputFile.bufferedWriter().use { writer ->
-            strings.forEach {
+            codes.forEach {
                 writer.write(it)
                 writer.newLine()
             }

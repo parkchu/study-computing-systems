@@ -5,6 +5,22 @@ interface Token {
     var value: String
 
     fun isIt(string: String): Boolean
+
+    fun isTerm(): Boolean = false
+
+    fun isUnaryOp(): Boolean = false
+
+    fun isOp(): Boolean = false
+
+    fun isType(): Boolean = false
+
+    fun isKeywordIt(keyword: Keyword): Boolean = false
+
+    fun isKeywordIts(keywords: List<Keyword>): Boolean = false
+
+    fun isIdentifier(): Boolean = false
+
+    fun isSymbolIt(symbol: Char): Boolean = false
 }
 
 class KeywordToken : Token {
@@ -15,6 +31,18 @@ class KeywordToken : Token {
         value = string.dropLast(1)
         return Keyword.containsIt(value)
     }
+
+    override fun isKeywordIt(keyword: Keyword): Boolean {
+        return Keyword.find(value) == keyword
+    }
+
+    override fun isKeywordIts(keywords: List<Keyword>): Boolean {
+        return keywords.contains(Keyword.find(value))
+    }
+
+    override fun isTerm(): Boolean = isKeywordIts(listOf(Keyword.TRUE, Keyword.FALSE, Keyword.NULL, Keyword.THIS))
+
+    override fun isType(): Boolean = isKeywordIts(listOf(Keyword.INT, Keyword.CHAR, Keyword.BOOLEAN))
 }
 
 class IdentifierToken : Token {
@@ -25,6 +53,12 @@ class IdentifierToken : Token {
         value = string.dropLast(1)
         return !checkNum(value)
     }
+
+    override fun isIdentifier(): Boolean = true
+
+    override fun isTerm(): Boolean = true
+
+    override fun isType(): Boolean = true
 }
 
 class IntValToken : Token {
@@ -35,6 +69,8 @@ class IntValToken : Token {
         value = string.dropLast(1)
         return checkNum(value)
     }
+
+    override fun isTerm(): Boolean = true
 }
 
 class StringValToken : Token {
@@ -45,6 +81,8 @@ class StringValToken : Token {
         value = string.dropLast(1)
         return string.last() == '"'
     }
+
+    override fun isTerm(): Boolean = true
 }
 
 class SymbolToken : Token {
@@ -55,6 +93,14 @@ class SymbolToken : Token {
         value = string
         return false
     }
+
+    override fun isSymbolIt(symbol: Char): Boolean = value[0] == symbol
+
+    override fun isTerm(): Boolean = isSymbolIt('(') || isUnaryOp()
+
+    override fun isUnaryOp(): Boolean = "-~".contains(value[0])
+
+    override fun isOp(): Boolean = "+-*/&|<>=".contains(value[0])
 }
 
 enum class TokenType(val value: String) {
