@@ -1,4 +1,4 @@
-import jackAnalyzer.JackAnalyzer
+import jackCompiler.JackCompiler
 import java.io.File
 
 fun main () {
@@ -8,7 +8,7 @@ fun main () {
     val file = File(filePath.trim())
     val files = file.walkTopDown().toList().filter { it.extension == "jack" }
     files.forEach {
-        val jackAnalyzer = JackAnalyzer(it)
+        val jackAnalyzer = JackCompiler(it)
         jackAnalyzer.write()
         println("${it.nameWithoutExtension} : ${it.path}")
     }
