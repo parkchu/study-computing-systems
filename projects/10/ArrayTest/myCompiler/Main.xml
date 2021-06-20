@@ -1,11 +1,13 @@
 <class>
 <keyword> class </keyword>
 <identifier> Main </identifier>
+<moreInformation> define CLASS </moreInformation>
 <symbol> { </symbol>
 <subroutineDec>
 <keyword> function </keyword>
 <keyword> void </keyword>
 <identifier> main </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -15,33 +17,41 @@
 <varDec>
 <keyword> var </keyword>
 <identifier> Array </identifier>
+<moreInformation> use CLASS </moreInformation>
 <identifier> a </identifier>
+<moreInformation> define VAR 0 </moreInformation>
 <symbol> ; </symbol>
 </varDec>
 <varDec>
 <keyword> var </keyword>
 <keyword> int </keyword>
 <identifier> length </identifier>
+<moreInformation> define VAR 1 </moreInformation>
 <symbol> ; </symbol>
 </varDec>
 <varDec>
 <keyword> var </keyword>
 <keyword> int </keyword>
 <identifier> i </identifier>
+<moreInformation> define VAR 2 </moreInformation>
 <symbol> , </symbol>
 <identifier> sum </identifier>
+<moreInformation> define VAR 3 </moreInformation>
 <symbol> ; </symbol>
 </varDec>
 <statements>
 <letStatement>
 <keyword> let </keyword>
 <identifier> length </identifier>
+<moreInformation> init VAR 1 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> Keyboard </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> readInt </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -58,17 +68,21 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> a </identifier>
+<moreInformation> init VAR 0 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> Array </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> new </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
 <identifier> length </identifier>
+<moreInformation> use VAR 1 </moreInformation>
 </term>
 </expression>
 </expressionList>
@@ -80,6 +94,7 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> i </identifier>
+<moreInformation> init VAR 2 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
@@ -94,10 +109,12 @@
 <expression>
 <term>
 <identifier> i </identifier>
+<moreInformation> use VAR 2 </moreInformation>
 </term>
 <symbol> &lt; </symbol>
 <term>
 <identifier> length </identifier>
+<moreInformation> use VAR 1 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -106,10 +123,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> a </identifier>
+<moreInformation> init VAR 0 </moreInformation>
 <symbol> [ </symbol>
 <expression>
 <term>
 <identifier> i </identifier>
+<moreInformation> use VAR 2 </moreInformation>
 </term>
 </expression>
 <symbol> ] </symbol>
@@ -117,8 +136,10 @@
 <expression>
 <term>
 <identifier> Keyboard </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> readInt </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -135,10 +156,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> i </identifier>
+<moreInformation> init VAR 2 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> i </identifier>
+<moreInformation> use VAR 2 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
@@ -153,6 +176,7 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> i </identifier>
+<moreInformation> init VAR 2 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
@@ -164,6 +188,7 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> sum </identifier>
+<moreInformation> init VAR 3 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
@@ -178,10 +203,12 @@
 <expression>
 <term>
 <identifier> i </identifier>
+<moreInformation> use VAR 2 </moreInformation>
 </term>
 <symbol> &lt; </symbol>
 <term>
 <identifier> length </identifier>
+<moreInformation> use VAR 1 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -190,18 +217,22 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> sum </identifier>
+<moreInformation> init VAR 3 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> sum </identifier>
+<moreInformation> use VAR 3 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> a </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 <symbol> [ </symbol>
 <expression>
 <term>
 <identifier> i </identifier>
+<moreInformation> use VAR 2 </moreInformation>
 </term>
 </expression>
 <symbol> ] </symbol>
@@ -212,10 +243,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> i </identifier>
+<moreInformation> init VAR 2 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> i </identifier>
+<moreInformation> use VAR 2 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
@@ -230,8 +263,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Output </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> printString </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -246,17 +281,21 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Output </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> printInt </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
 <identifier> sum </identifier>
+<moreInformation> use VAR 3 </moreInformation>
 </term>
 <symbol> / </symbol>
 <term>
 <identifier> length </identifier>
+<moreInformation> use VAR 1 </moreInformation>
 </term>
 </expression>
 </expressionList>
@@ -266,8 +305,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Output </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> println </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>

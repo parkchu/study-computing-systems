@@ -34,12 +34,12 @@ class SymbolTable {
     fun typeOf(name: String): String {
         return subroutineSymbols.find { it.isNameIt(name) }?.type
             ?: classSymbols.find { it.isNameIt(name) }?.type
-            ?: throw RuntimeException("해당 심볼은 존재하지 않습니다.")
+            ?: ""
     }
 
     fun indexOf(name: String): Int {
         return subroutineSymbols.find { it.isNameIt(name) }?.index
             ?: classSymbols.find { it.isNameIt(name) }?.index
-            ?: throw RuntimeException("해당 심볼은 존재하지 않습니다.")
+            ?: -1
     }
 }

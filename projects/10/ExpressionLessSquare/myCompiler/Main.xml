@@ -1,17 +1,20 @@
 <class>
 <keyword> class </keyword>
 <identifier> Main </identifier>
+<moreInformation> define CLASS </moreInformation>
 <symbol> { </symbol>
 <classVarDec>
 <keyword> static </keyword>
 <keyword> boolean </keyword>
 <identifier> test </identifier>
+<moreInformation> define STATIC 0 </moreInformation>
 <symbol> ; </symbol>
 </classVarDec>
 <subroutineDec>
 <keyword> function </keyword>
 <keyword> void </keyword>
 <identifier> main </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -21,17 +24,21 @@
 <varDec>
 <keyword> var </keyword>
 <identifier> SquareGame </identifier>
+<moreInformation> use CLASS </moreInformation>
 <identifier> game </identifier>
+<moreInformation> define VAR 0 </moreInformation>
 <symbol> ; </symbol>
 </varDec>
 <statements>
 <letStatement>
 <keyword> let </keyword>
 <identifier> game </identifier>
+<moreInformation> init VAR 0 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> game </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -39,8 +46,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> game </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 <symbol> . </symbol>
 <identifier> run </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -50,8 +59,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> game </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 <symbol> . </symbol>
 <identifier> dispose </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -70,6 +81,7 @@
 <keyword> function </keyword>
 <keyword> void </keyword>
 <identifier> more </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -80,6 +92,7 @@
 <keyword> var </keyword>
 <keyword> boolean </keyword>
 <identifier> b </identifier>
+<moreInformation> define VAR 0 </moreInformation>
 <symbol> ; </symbol>
 </varDec>
 <statements>
@@ -89,6 +102,7 @@
 <expression>
 <term>
 <identifier> b </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>

@@ -1,35 +1,44 @@
 <class>
 <keyword> class </keyword>
 <identifier> Square </identifier>
+<moreInformation> define CLASS </moreInformation>
 <symbol> { </symbol>
 <classVarDec>
 <keyword> field </keyword>
 <keyword> int </keyword>
 <identifier> x </identifier>
+<moreInformation> define FIELD 0 </moreInformation>
 <symbol> , </symbol>
 <identifier> y </identifier>
+<moreInformation> define FIELD 1 </moreInformation>
 <symbol> ; </symbol>
 </classVarDec>
 <classVarDec>
 <keyword> field </keyword>
 <keyword> int </keyword>
 <identifier> size </identifier>
+<moreInformation> define FIELD 2 </moreInformation>
 <symbol> ; </symbol>
 </classVarDec>
 <subroutineDec>
 <keyword> constructor </keyword>
 <identifier> Square </identifier>
+<moreInformation> use CLASS </moreInformation>
 <identifier> new </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 <keyword> int </keyword>
 <identifier> Ax </identifier>
+<moreInformation> define ARG 0 </moreInformation>
 <symbol> , </symbol>
 <keyword> int </keyword>
 <identifier> Ay </identifier>
+<moreInformation> define ARG 1 </moreInformation>
 <symbol> , </symbol>
 <keyword> int </keyword>
 <identifier> Asize </identifier>
+<moreInformation> define ARG 2 </moreInformation>
 </parameterList>
 <symbol> ) </symbol>
 <subroutineBody>
@@ -38,10 +47,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> x </identifier>
+<moreInformation> init FIELD 0 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> Ax </identifier>
+<moreInformation> use ARG 0 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -49,10 +60,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> y </identifier>
+<moreInformation> init FIELD 1 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> Ay </identifier>
+<moreInformation> use ARG 1 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -60,10 +73,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> size </identifier>
+<moreInformation> init FIELD 2 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> Asize </identifier>
+<moreInformation> use ARG 2 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -71,6 +86,7 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> draw </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -94,6 +110,7 @@
 <keyword> method </keyword>
 <keyword> void </keyword>
 <identifier> dispose </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -104,8 +121,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Memory </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> deAlloc </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -129,6 +148,7 @@
 <keyword> method </keyword>
 <keyword> void </keyword>
 <identifier> draw </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -139,8 +159,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> setColor </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -155,39 +177,47 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 </expressionList>
@@ -206,6 +236,7 @@
 <keyword> method </keyword>
 <keyword> void </keyword>
 <identifier> erase </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -216,8 +247,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> setColor </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -232,39 +265,47 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 </expressionList>
@@ -283,6 +324,7 @@
 <keyword> method </keyword>
 <keyword> void </keyword>
 <identifier> incSize </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -302,10 +344,12 @@
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -326,10 +370,12 @@
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -348,6 +394,7 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> erase </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -357,10 +404,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> size </identifier>
+<moreInformation> init FIELD 2 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
@@ -372,6 +421,7 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> draw </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -393,6 +443,7 @@
 <keyword> method </keyword>
 <keyword> void </keyword>
 <identifier> decSize </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -406,6 +457,7 @@
 <expression>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 <symbol> &gt; </symbol>
 <term>
@@ -418,6 +470,7 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> erase </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -427,10 +480,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> size </identifier>
+<moreInformation> init FIELD 2 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 <symbol> - </symbol>
 <term>
@@ -442,6 +497,7 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> draw </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -463,6 +519,7 @@
 <keyword> method </keyword>
 <keyword> void </keyword>
 <identifier> moveUp </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -476,6 +533,7 @@
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> &gt; </symbol>
 <term>
@@ -488,8 +546,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> setColor </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -504,13 +564,16 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
@@ -520,10 +583,12 @@
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -537,20 +602,24 @@
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 </expressionList>
@@ -560,10 +629,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> y </identifier>
+<moreInformation> init FIELD 1 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> - </symbol>
 <term>
@@ -575,8 +646,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> setColor </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -591,35 +664,42 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
@@ -645,6 +725,7 @@
 <keyword> method </keyword>
 <keyword> void </keyword>
 <identifier> moveDown </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -661,10 +742,12 @@
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -680,8 +763,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> setColor </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -696,35 +781,42 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
@@ -738,10 +830,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> y </identifier>
+<moreInformation> init FIELD 1 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
@@ -753,8 +847,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> setColor </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -769,13 +865,16 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
@@ -785,10 +884,12 @@
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -802,20 +903,24 @@
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 </expressionList>
@@ -837,6 +942,7 @@
 <keyword> method </keyword>
 <keyword> void </keyword>
 <identifier> moveLeft </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -850,6 +956,7 @@
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> &gt; </symbol>
 <term>
@@ -862,8 +969,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> setColor </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -878,8 +987,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -888,10 +999,12 @@
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -905,26 +1018,31 @@
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 </expressionList>
@@ -934,10 +1052,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> x </identifier>
+<moreInformation> init FIELD 0 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> - </symbol>
 <term>
@@ -949,8 +1069,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> setColor </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -965,25 +1087,30 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
@@ -994,10 +1121,12 @@
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 </expressionList>
@@ -1019,6 +1148,7 @@
 <keyword> method </keyword>
 <keyword> void </keyword>
 <identifier> moveRight </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -1035,10 +1165,12 @@
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -1054,8 +1186,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> setColor </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -1070,25 +1204,30 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
@@ -1099,10 +1238,12 @@
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 </expressionList>
@@ -1112,10 +1253,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> x </identifier>
+<moreInformation> init FIELD 0 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
@@ -1127,8 +1270,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> setColor </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -1143,8 +1288,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
@@ -1153,10 +1300,12 @@
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -1170,26 +1319,31 @@
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> x </identifier>
+<moreInformation> use FIELD 0 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 <symbol> , </symbol>
 <expression>
 <term>
 <identifier> y </identifier>
+<moreInformation> use FIELD 1 </moreInformation>
 </term>
 <symbol> + </symbol>
 <term>
 <identifier> size </identifier>
+<moreInformation> use FIELD 2 </moreInformation>
 </term>
 </expression>
 </expressionList>

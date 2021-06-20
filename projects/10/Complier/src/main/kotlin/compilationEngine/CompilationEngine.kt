@@ -3,6 +3,9 @@ package compilationEngine
 import jackTokenizer.JackTokenizer
 import jackTokenizer.Keyword
 import jackTokenizer.Token
+import symbolTable.SymbolTable
+
+val symbolTable = SymbolTable()
 
 class CompilationEngine(private val jackTokenizer: JackTokenizer) {
     private val codes = mutableListOf<String>()
@@ -15,6 +18,7 @@ class CompilationEngine(private val jackTokenizer: JackTokenizer) {
         addMustString(currentToken.isKeywordIt(Keyword.CLASS))
         jackTokenizer.advance()
         addMustString(currentToken.isIdentifier())
+        codes.add("<moreInformation> define CLASS </moreInformation>")
         jackTokenizer.advance()
         addMustString(currentToken.isSymbolIt('{'))
         jackTokenizer.advance()
