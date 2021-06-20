@@ -11,9 +11,29 @@ class SymbolTable {
         Kind.ARG to subroutineSymbols,
         Kind.VAR to subroutineSymbols
     )
+    var className: String = ""
+        private set
+    var subroutineName: String = ""
+        private set
+
+    fun init() {
+        classSymbols.clear()
+        subroutineSymbols.clear()
+        className = ""
+        subroutineName = ""
+    }
+
+    fun setClassName(name: String) {
+        className = name
+    }
+
+    fun setSubroutineName(name: String) {
+        subroutineName = name
+    }
 
     fun startSubroutine() {
         subroutineSymbols.clear()
+        subroutineName = ""
     }
 
     fun define(name: String, type: String, kind: Kind) {
