@@ -4,7 +4,7 @@ enum class Kind(val value: String) {
     STATIC("static"),
     FIELD("field"),
     ARG("argument"),
-    VAR("var"),
+    VAR("local"),
     NONE("");
 
     companion object {

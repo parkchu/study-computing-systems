@@ -15,12 +15,13 @@ class SymbolTable {
         private set
     var subroutineName: String = ""
         private set
+    var subroutineType: String = ""
+        private set
 
     fun init() {
         classSymbols.clear()
-        subroutineSymbols.clear()
         className = ""
-        subroutineName = ""
+        startSubroutine()
     }
 
     fun setClassName(name: String) {
@@ -31,9 +32,14 @@ class SymbolTable {
         subroutineName = name
     }
 
+    fun setSubroutineType(type: String) {
+        subroutineType = type
+    }
+
     fun startSubroutine() {
         subroutineSymbols.clear()
         subroutineName = ""
+        subroutineType = ""
     }
 
     fun define(name: String, type: String, kind: Kind) {

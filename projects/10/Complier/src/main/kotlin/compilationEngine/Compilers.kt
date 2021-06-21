@@ -6,6 +6,8 @@ import jackTokenizer.Token
 import jackTokenizer.TokenType
 import symbolTable.Kind
 
+var numLabels = 1
+
 abstract class Compiler(val jackTokenizer: JackTokenizer) {
     val codes = mutableListOf<String>()
     val currentToken: Token
@@ -28,7 +30,10 @@ abstract class Compiler(val jackTokenizer: JackTokenizer) {
     }
 
     fun compileStatements() {
-        codes.add("function ${symbolTable.className}.${symbolTable.subroutineName} ${symbolTable.varCount(Kind.VAR)}")
+        if (symbolTable.subroutineName != "") {
+            codes.add("function ${symbolTable.className}.${symbolTable.subroutineName} ${symbolTable.varCount(Kind.VAR)}")
+            symbolTable.setSubroutineName("")
+        }
         while (!currentToken.isSymbolIt('}')) {
             val compilers = listOf(
                 CompilerLet(jackTokenizer),
@@ -71,13 +76,15 @@ class CompilerClassVarDec(jackTokenizer: JackTokenizer) : Compiler(jackTokenizer
 }
 
 class CompilerSubroutine(jackTokenizer: JackTokenizer) : Compiler(jackTokenizer) {
-    override fun isIt(): Boolean = currentToken.isKeywordIts(listOf(Keyword.CONSTRUCTOR, Keyword.METHOD, Keyword.FUNCTION))
+    override fun isIt(): Boolean =
+        currentToken.isKeywordIts(listOf(Keyword.CONSTRUCTOR, Keyword.METHOD, Keyword.FUNCTION))
 
     override fun compile(): List<String> {
         symbolTable.startSubroutine()
         addMustString()
         jackTokenizer.advance()
         addMustString(currentToken.isType() || currentToken.isKeywordIt(Keyword.VOID))
+        symbolTable.setSubroutineType(currentToken.value)
         jackTokenizer.advance()
         addMustString(currentToken.isIdentifier())
         symbolTable.setSubroutineName(currentToken.value)
@@ -125,7 +132,6 @@ class CompilerSubroutine(jackTokenizer: JackTokenizer) : Compiler(jackTokenizer)
     }
 
     private fun compileVarDec() {
-        codes.add("<varDec>")
         addMustString()
         jackTokenizer.advance()
         addMustString(currentToken.isType())
@@ -144,7 +150,6 @@ class CompilerSubroutine(jackTokenizer: JackTokenizer) : Compiler(jackTokenizer)
             jackTokenizer.advance()
         }
         addMustString()
-        codes.add("</varDec>")
         jackTokenizer.advance()
     }
 }
@@ -157,7 +162,7 @@ abstract class CompilerStatements(jackTokenizer: JackTokenizer) : Compiler(jackT
             val op = currentToken.value
             jackTokenizer.advance()
             compileTerm()
-            codes.add(ops[op] ?: throw RuntimeException("잘못된 기호를 입력하였습니다."))
+            codes.add(ops[op] ?: throw RuntimeException("잘못된 기호를 입력하였습니다. $op"))
         }
     }
 
@@ -188,7 +193,17 @@ abstract class CompilerStatements(jackTokenizer: JackTokenizer) : Compiler(jackT
     }
 
     companion object {
-        val ops = mapOf("+" to "add", "-" to "sub", "*" to "call Math.multiply 2", "=" to "eq", ">" to "gt", "<" to "lt", "&" to "and", "|" to "or")
+        val ops = mapOf(
+            "+" to "add",
+            "-" to "sub",
+            "*" to "call Math.multiply 2",
+            "/" to "call Math.divide 2",
+            "=" to "eq",
+            ">" to "gt",
+            "<" to "lt",
+            "&" to "and",
+            "|" to "or"
+        )
     }
 }
 
@@ -196,12 +211,14 @@ class CompilerIf(jackTokenizer: JackTokenizer) : CompilerStatements(jackTokenize
     override fun isIt(): Boolean = currentToken.isKeywordIt(Keyword.IF)
 
     override fun compile(): List<String> {
-        codes.add("<ifStatement>")
+        val num = numLabels
+        numLabels += 2
         addMustString()
         jackTokenizer.advance()
         addMustString(currentToken.isSymbolIt('('))
         jackTokenizer.advance()
         compileExpression()
+        codes.addAll(listOf("not", "if-goto l$num"))
         addMustString(currentToken.isSymbolIt(')'))
         jackTokenizer.advance()
         addMustString(currentToken.isSymbolIt('{'))
@@ -211,10 +228,11 @@ class CompilerIf(jackTokenizer: JackTokenizer) : CompilerStatements(jackTokenize
         }
         addMustString()
         jackTokenizer.advance()
+        codes.addAll(listOf("goto l${num + 1}", "label l$num"))
         if (currentToken.isKeywordIt(Keyword.ELSE)) {
             compileElse()
         }
-        codes.add("</ifStatement>")
+        codes.add("label l${num + 1}")
         return codes
     }
 
@@ -235,11 +253,10 @@ class CompilerLet(jackTokenizer: JackTokenizer) : CompilerStatements(jackTokeniz
     override fun isIt(): Boolean = currentToken.isKeywordIt(Keyword.LET)
 
     override fun compile(): List<String> {
-        codes.add("<letStatement>")
         addMustString()
         jackTokenizer.advance()
         addMustString(currentToken.isIdentifier())
-        addMoreInformation("init", currentToken.value)
+        val popName = currentToken.value
         jackTokenizer.advance()
         if (currentToken.isSymbolIt('[')) {
             addMustString()
@@ -251,8 +268,8 @@ class CompilerLet(jackTokenizer: JackTokenizer) : CompilerStatements(jackTokeniz
         addMustString(currentToken.isSymbolIt('='))
         jackTokenizer.advance()
         compileExpression()
+        codes.add("pop ${symbolTable.kindOf(popName).value} ${symbolTable.indexOf(popName)}")
         addMustString(currentToken.isSymbolIt(';'))
-        codes.add("</letStatement>")
         jackTokenizer.advance()
         return codes
     }
@@ -262,12 +279,15 @@ class CompilerWhile(jackTokenizer: JackTokenizer) : CompilerStatements(jackToken
     override fun isIt(): Boolean = currentToken.isKeywordIt(Keyword.WHILE)
 
     override fun compile(): List<String> {
-        codes.add("<whileStatement>")
+        val num = numLabels
+        numLabels += 2
+        codes.add("label l$num")
         addMustString()
         jackTokenizer.advance()
         addMustString(currentToken.isSymbolIt('('))
         jackTokenizer.advance()
         compileExpression()
+        codes.addAll(listOf("not", "if-goto l${num + 1}"))
         addMustString(currentToken.isSymbolIt(')'))
         jackTokenizer.advance()
         addMustString(currentToken.isSymbolIt('{'))
@@ -276,8 +296,8 @@ class CompilerWhile(jackTokenizer: JackTokenizer) : CompilerStatements(jackToken
             compileStatements()
         }
         addMustString(currentToken.isSymbolIt('}'))
-        codes.add("</whileStatement>")
         jackTokenizer.advance()
+        codes.addAll(listOf("goto l$num", "label l${num + 1}"))
         return codes
     }
 }
@@ -292,7 +312,6 @@ class CompilerDo(jackTokenizer: JackTokenizer) : CompilerStatements(jackTokenize
         val name = currentToken.value
         jackTokenizer.advance()
         if (currentToken.isSymbolIt('(')) {
-            codes.add("<moreInformation> use SUBROUTINE </moreInformation>")
             addMustString()
             val index = compileExpressionList() + 1
             addMustString(currentToken.isSymbolIt(')'))
@@ -336,6 +355,9 @@ class CompilerReturn(jackTokenizer: JackTokenizer) : CompilerStatements(jackToke
         }
         addMustString(currentToken.isSymbolIt(';'))
         jackTokenizer.advance()
+        if (symbolTable.subroutineType == "void") {
+            codes.add("push constant 0")
+        }
         codes.add("return")
         return codes
     }
@@ -347,8 +369,16 @@ class CompilerTerm(jackTokenizer: JackTokenizer) : CompilerStatements(jackTokeni
             currentToken.isKeywordIts(listOf(Keyword.TRUE, Keyword.FALSE, Keyword.NULL, Keyword.THIS))
 
     override fun compile(): List<String> {
+        val map = mapOf(
+            Keyword.TRUE.value to listOf("push constant 1", "neg"),
+            Keyword.FALSE.value to listOf("push constant 0"),
+            Keyword.NULL.value to listOf("push constant 0"),
+            Keyword.THIS.value to listOf()
+        )
         if (currentToken.type == TokenType.INT_CONST) {
             codes.add("push constant ${currentToken.value}")
+        } else {
+            codes.addAll(map[currentToken.value] ?: throw RuntimeException(""))
         }
         jackTokenizer.advance()
         return codes
@@ -362,20 +392,21 @@ class CompilerTermWhenIdentifier(jackTokenizer: JackTokenizer) : CompilerStateme
         val symbolName = currentToken.value
         val compilers = listOf(
             CompilerTermWhenArray(jackTokenizer, symbolName),
-            CompilerTermWhenCall(jackTokenizer),
+            CompilerTermWhenCall(jackTokenizer, symbolName),
             CompilerTermWhenClassCall(jackTokenizer, symbolName)
         )
         jackTokenizer.advance()
         val codes = compilers.find { it.isIt() }?.compile() ?: listOf()
         if (codes.isEmpty()) {
-            addMoreInformation("use", symbolName)
+            this.codes.add("push ${symbolTable.kindOf(symbolName).value} ${symbolTable.indexOf(symbolName)}")
         }
         this.codes.addAll(codes)
         return this.codes
     }
 }
 
-class CompilerTermWhenArray(jackTokenizer: JackTokenizer, private val symbolName: String) : CompilerStatements(jackTokenizer) {
+class CompilerTermWhenArray(jackTokenizer: JackTokenizer, private val symbolName: String) :
+    CompilerStatements(jackTokenizer) {
     override fun isIt(): Boolean = currentToken.isSymbolIt('[')
 
     override fun compile(): List<String> {
@@ -389,37 +420,43 @@ class CompilerTermWhenArray(jackTokenizer: JackTokenizer, private val symbolName
     }
 }
 
-class CompilerTermWhenCall(jackTokenizer: JackTokenizer) : CompilerStatements(jackTokenizer) {
+class CompilerTermWhenCall(jackTokenizer: JackTokenizer, private val symbolName: String) : CompilerStatements(jackTokenizer) {
     override fun isIt(): Boolean = currentToken.isSymbolIt('(')
 
     override fun compile(): List<String> {
         codes.add("<moreInformation> use SUBROUTINE </moreInformation>")
         addMustString()
-        compileExpressionList()
+        val index = compileExpressionList() + 1
         addMustString(currentToken.isSymbolIt(')'))
         jackTokenizer.advance()
+        codes.add("call $symbolName $index")
         return codes
     }
 }
 
-class CompilerTermWhenClassCall(jackTokenizer: JackTokenizer, private val symbolName: String) : CompilerStatements(jackTokenizer) {
+class CompilerTermWhenClassCall(jackTokenizer: JackTokenizer, private val symbolName: String) :
+    CompilerStatements(jackTokenizer) {
     override fun isIt(): Boolean = currentToken.isSymbolIt('.')
 
     override fun compile(): List<String> {
-        if (symbolTable.kindOf(symbolName) == Kind.NONE) {
-            codes.add("<moreInformation> use CLASS </moreInformation>")
+        val count: Int
+        val className = if (symbolTable.kindOf(symbolName) == Kind.NONE) {
+            count = 0
+            symbolName
         } else {
-            addMoreInformation("use", symbolName)
+            count = 1
+            symbolTable.typeOf(symbolName)
         }
         addMustString()
         jackTokenizer.advance()
         addMustString(currentToken.isIdentifier())
-        codes.add("<moreInformation> use SUBROUTINE </moreInformation>")
+        val subroutineName = currentToken.value
         jackTokenizer.advance()
         addMustString(currentToken.isSymbolIt('('))
-        compileExpressionList()
+        val index = compileExpressionList() + count
         addMustString(currentToken.isSymbolIt(')'))
         jackTokenizer.advance()
+        codes.add("call $className.$subroutineName $index")
         return codes
     }
 }
@@ -440,8 +477,11 @@ class CompilerTermWhenUnaryOp(jackTokenizer: JackTokenizer) : CompilerStatements
     override fun isIt(): Boolean = currentToken.isUnaryOp()
 
     override fun compile(): List<String> {
+        val unaryOps = mapOf("-" to "neg", "~" to "not")
+        val unaryOp = unaryOps[currentToken.value] ?: throw RuntimeException("잘못된 기호를 입력했습니다.")
         jackTokenizer.advance()
         compileTerm()
+        codes.add(unaryOp)
         return codes
     }
 }
