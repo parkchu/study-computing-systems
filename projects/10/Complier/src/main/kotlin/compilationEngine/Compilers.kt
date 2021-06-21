@@ -32,6 +32,18 @@ abstract class Compiler(val jackTokenizer: JackTokenizer) {
     fun compileStatements() {
         if (symbolTable.subroutineName != "") {
             codes.add("function ${symbolTable.className}.${symbolTable.subroutineName} ${symbolTable.varCount(Kind.VAR)}")
+            if (symbolTable.subroutineType == "constructor") {
+                codes.addAll(
+                    listOf(
+                        "push constant ${symbolTable.varCount(Kind.FIELD)}",
+                        "call Memory.alloc 1",
+                        "pop pointer 0"
+                    )
+                )
+            }
+            if (symbolTable.subroutineType == "method") {
+                codes.addAll(listOf("push argument 0", "pop pointer 0"))
+            }
             symbolTable.setSubroutineName("")
         }
         while (!currentToken.isSymbolIt('}')) {
@@ -56,9 +68,6 @@ class CompilerClassVarDec(jackTokenizer: JackTokenizer) : Compiler(jackTokenizer
         val kind = Kind.findIt(currentToken.value)
         jackTokenizer.advance()
         addMustString(currentToken.isType())
-        if (currentToken.isIdentifier()) {
-            codes.add("<moreInformation> use CLASS </moreInformation>")
-        }
         val type = currentToken.value
         jackTokenizer.advance()
         while (!currentToken.isSymbolIt(';')) {
@@ -82,9 +91,10 @@ class CompilerSubroutine(jackTokenizer: JackTokenizer) : Compiler(jackTokenizer)
     override fun compile(): List<String> {
         symbolTable.startSubroutine()
         addMustString()
+        symbolTable.setSubroutineType(currentToken.value)
         jackTokenizer.advance()
         addMustString(currentToken.isType() || currentToken.isKeywordIt(Keyword.VOID))
-        symbolTable.setSubroutineType(currentToken.value)
+        symbolTable.setSubroutineReturnType(currentToken.value)
         jackTokenizer.advance()
         addMustString(currentToken.isIdentifier())
         symbolTable.setSubroutineName(currentToken.value)
@@ -100,9 +110,6 @@ class CompilerSubroutine(jackTokenizer: JackTokenizer) : Compiler(jackTokenizer)
         jackTokenizer.advance()
         while (!currentToken.isSymbolIt(')')) {
             addMustString(currentToken.isType())
-            if (currentToken.isIdentifier()) {
-                codes.add("<moreInformation> use CLASS </moreInformation>")
-            }
             val type = currentToken.value
             jackTokenizer.advance()
             addMustString(currentToken.isIdentifier())
@@ -135,9 +142,6 @@ class CompilerSubroutine(jackTokenizer: JackTokenizer) : Compiler(jackTokenizer)
         addMustString()
         jackTokenizer.advance()
         addMustString(currentToken.isType())
-        if (currentToken.isIdentifier()) {
-            codes.add("<moreInformation> use CLASS </moreInformation>")
-        }
         val type = currentToken.value
         jackTokenizer.advance()
         while (!currentToken.isSymbolIt(';')) {
@@ -313,6 +317,7 @@ class CompilerDo(jackTokenizer: JackTokenizer) : CompilerStatements(jackTokenize
         jackTokenizer.advance()
         if (currentToken.isSymbolIt('(')) {
             addMustString()
+            codes.add("push pointer 0")
             val index = compileExpressionList() + 1
             addMustString(currentToken.isSymbolIt(')'))
             jackTokenizer.advance()
@@ -324,6 +329,7 @@ class CompilerDo(jackTokenizer: JackTokenizer) : CompilerStatements(jackTokenize
                 count = 0
                 name
             } else {
+                codes.add("push ${symbolTable.kindOf(name).value} 0")
                 count = 1
                 symbolTable.typeOf(name)
             }
@@ -338,6 +344,7 @@ class CompilerDo(jackTokenizer: JackTokenizer) : CompilerStatements(jackTokenize
             jackTokenizer.advance()
             codes.add("call $className.$subroutineName $index")
         }
+        codes.add("pop temp 0")
         addMustString(currentToken.isSymbolIt(';'))
         jackTokenizer.advance()
         return codes
@@ -355,7 +362,7 @@ class CompilerReturn(jackTokenizer: JackTokenizer) : CompilerStatements(jackToke
         }
         addMustString(currentToken.isSymbolIt(';'))
         jackTokenizer.advance()
-        if (symbolTable.subroutineType == "void") {
+        if (symbolTable.subroutineReturnType == "void") {
             codes.add("push constant 0")
         }
         codes.add("return")
@@ -373,7 +380,7 @@ class CompilerTerm(jackTokenizer: JackTokenizer) : CompilerStatements(jackTokeni
             Keyword.TRUE.value to listOf("push constant 1", "neg"),
             Keyword.FALSE.value to listOf("push constant 0"),
             Keyword.NULL.value to listOf("push constant 0"),
-            Keyword.THIS.value to listOf()
+            Keyword.THIS.value to listOf("push pointer 0")
         )
         if (currentToken.type == TokenType.INT_CONST) {
             codes.add("push constant ${currentToken.value}")
@@ -420,16 +427,17 @@ class CompilerTermWhenArray(jackTokenizer: JackTokenizer, private val symbolName
     }
 }
 
-class CompilerTermWhenCall(jackTokenizer: JackTokenizer, private val symbolName: String) : CompilerStatements(jackTokenizer) {
+class CompilerTermWhenCall(jackTokenizer: JackTokenizer, private val symbolName: String) :
+    CompilerStatements(jackTokenizer) {
     override fun isIt(): Boolean = currentToken.isSymbolIt('(')
 
     override fun compile(): List<String> {
-        codes.add("<moreInformation> use SUBROUTINE </moreInformation>")
+        codes.add("push pointer 0")
         addMustString()
         val index = compileExpressionList() + 1
         addMustString(currentToken.isSymbolIt(')'))
         jackTokenizer.advance()
-        codes.add("call $symbolName $index")
+        codes.add("call ${symbolTable.className}.$symbolName $index")
         return codes
     }
 }
@@ -444,6 +452,7 @@ class CompilerTermWhenClassCall(jackTokenizer: JackTokenizer, private val symbol
             count = 0
             symbolName
         } else {
+            codes.add("push ${symbolTable.kindOf(symbolName).value} 0")
             count = 1
             symbolTable.typeOf(symbolName)
         }

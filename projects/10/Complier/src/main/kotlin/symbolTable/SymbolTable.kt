@@ -15,6 +15,8 @@ class SymbolTable {
         private set
     var subroutineName: String = ""
         private set
+    var subroutineReturnType: String = ""
+        private set
     var subroutineType: String = ""
         private set
 
@@ -32,6 +34,10 @@ class SymbolTable {
         subroutineName = name
     }
 
+    fun setSubroutineReturnType(type: String) {
+        subroutineReturnType = type
+    }
+
     fun setSubroutineType(type: String) {
         subroutineType = type
     }
@@ -39,12 +45,13 @@ class SymbolTable {
     fun startSubroutine() {
         subroutineSymbols.clear()
         subroutineName = ""
+        subroutineReturnType = ""
         subroutineType = ""
     }
 
     fun define(name: String, type: String, kind: Kind) {
         val index = symbols.findLast { it.isKindIt(kind) }?.index ?: -1
-        val symbols = map[kind] ?: throw RuntimeException("")
+        val symbols = map[kind] ?: throw RuntimeException("$kind")
         val symbol = Symbol(name, type, kind, index + 1)
         symbols.add(symbol)
     }
