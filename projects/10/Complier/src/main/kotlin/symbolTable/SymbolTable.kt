@@ -11,6 +11,8 @@ class SymbolTable {
         Kind.ARG to subroutineSymbols,
         Kind.VAR to subroutineSymbols
     )
+    var isMethod: Boolean = false
+        private set
     var className: String = ""
         private set
     var subroutineName: String = ""
@@ -21,7 +23,7 @@ class SymbolTable {
         private set
 
     fun init() {
-        classSymbols.clear()
+        classSymbols.removeIf { it.kind == Kind.FIELD }
         className = ""
         startSubroutine()
     }
@@ -47,10 +49,19 @@ class SymbolTable {
         subroutineName = ""
         subroutineReturnType = ""
         subroutineType = ""
+        isMethod = false
+    }
+
+    fun setMethodTrue() {
+        isMethod = true
     }
 
     fun define(name: String, type: String, kind: Kind) {
-        val index = symbols.findLast { it.isKindIt(kind) }?.index ?: -1
+        val index = if (kind == Kind.ARG && isMethod) {
+            symbols.findLast { it.isKindIt(kind) }?.index ?: 0
+        } else {
+            symbols.findLast { it.isKindIt(kind) }?.index ?: -1
+        }
         val symbols = map[kind] ?: throw RuntimeException("$kind")
         val symbol = Symbol(name, type, kind, index + 1)
         symbols.add(symbol)
