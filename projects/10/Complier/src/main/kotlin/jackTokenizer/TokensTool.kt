@@ -57,9 +57,8 @@ class TokensTool {
 
     private fun addSymbol(char: Char) {
         if (symbols.contains(char)) {
-            val symbols = mapOf('<' to "&lt;", '>' to "&gt;", '&' to "&amp;")
             val token = SymbolToken()
-            val symbol = symbols[char] ?: char.toString()
+            val symbol = char.toString()
             token.isIt(symbol)
             mainList.add(token)
         }

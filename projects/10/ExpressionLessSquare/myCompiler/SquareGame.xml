@@ -1,23 +1,29 @@
 <class>
 <keyword> class </keyword>
 <identifier> SquareGame </identifier>
+<moreInformation> define CLASS </moreInformation>
 <symbol> { </symbol>
 <classVarDec>
 <keyword> field </keyword>
 <identifier> Square </identifier>
+<moreInformation> use CLASS </moreInformation>
 <identifier> square </identifier>
+<moreInformation> define FIELD 3 </moreInformation>
 <symbol> ; </symbol>
 </classVarDec>
 <classVarDec>
 <keyword> field </keyword>
 <keyword> int </keyword>
 <identifier> direction </identifier>
+<moreInformation> define FIELD 4 </moreInformation>
 <symbol> ; </symbol>
 </classVarDec>
 <subroutineDec>
 <keyword> constructor </keyword>
 <identifier> SquareGame </identifier>
+<moreInformation> use CLASS </moreInformation>
 <identifier> new </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -28,10 +34,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> square </identifier>
+<moreInformation> init FIELD 3 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> square </identifier>
+<moreInformation> use FIELD 3 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -39,10 +47,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> direction </identifier>
+<moreInformation> init FIELD 4 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> direction </identifier>
+<moreInformation> use FIELD 4 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -52,6 +62,7 @@
 <expression>
 <term>
 <identifier> square </identifier>
+<moreInformation> use FIELD 3 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -64,6 +75,7 @@
 <keyword> method </keyword>
 <keyword> void </keyword>
 <identifier> dispose </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -74,8 +86,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> square </identifier>
+<moreInformation> use FIELD 3 </moreInformation>
 <symbol> . </symbol>
 <identifier> dispose </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -85,13 +99,16 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Memory </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> deAlloc </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
 <identifier> square </identifier>
+<moreInformation> use FIELD 3 </moreInformation>
 </term>
 </expression>
 </expressionList>
@@ -110,6 +127,7 @@
 <keyword> method </keyword>
 <keyword> void </keyword>
 <identifier> moveSquare </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -123,6 +141,7 @@
 <expression>
 <term>
 <identifier> direction </identifier>
+<moreInformation> use FIELD 4 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -131,8 +150,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> square </identifier>
+<moreInformation> use FIELD 3 </moreInformation>
 <symbol> . </symbol>
 <identifier> moveUp </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -148,6 +169,7 @@
 <expression>
 <term>
 <identifier> direction </identifier>
+<moreInformation> use FIELD 4 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -156,8 +178,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> square </identifier>
+<moreInformation> use FIELD 3 </moreInformation>
 <symbol> . </symbol>
 <identifier> moveDown </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -173,6 +197,7 @@
 <expression>
 <term>
 <identifier> direction </identifier>
+<moreInformation> use FIELD 4 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -181,8 +206,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> square </identifier>
+<moreInformation> use FIELD 3 </moreInformation>
 <symbol> . </symbol>
 <identifier> moveLeft </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -198,6 +225,7 @@
 <expression>
 <term>
 <identifier> direction </identifier>
+<moreInformation> use FIELD 4 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -206,8 +234,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> square </identifier>
+<moreInformation> use FIELD 3 </moreInformation>
 <symbol> . </symbol>
 <identifier> moveRight </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -220,13 +250,16 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> Sys </identifier>
+<moreInformation> use CLASS </moreInformation>
 <symbol> . </symbol>
 <identifier> wait </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
 <identifier> direction </identifier>
+<moreInformation> use FIELD 4 </moreInformation>
 </term>
 </expression>
 </expressionList>
@@ -245,6 +278,7 @@
 <keyword> method </keyword>
 <keyword> void </keyword>
 <identifier> run </identifier>
+<moreInformation> define SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <parameterList>
 </parameterList>
@@ -255,22 +289,26 @@
 <keyword> var </keyword>
 <keyword> char </keyword>
 <identifier> key </identifier>
+<moreInformation> define VAR 0 </moreInformation>
 <symbol> ; </symbol>
 </varDec>
 <varDec>
 <keyword> var </keyword>
 <keyword> boolean </keyword>
 <identifier> exit </identifier>
+<moreInformation> define VAR 1 </moreInformation>
 <symbol> ; </symbol>
 </varDec>
 <statements>
 <letStatement>
 <keyword> let </keyword>
 <identifier> exit </identifier>
+<moreInformation> init VAR 1 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -281,6 +319,7 @@
 <expression>
 <term>
 <identifier> exit </identifier>
+<moreInformation> use VAR 1 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -292,6 +331,7 @@
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -300,10 +340,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> key </identifier>
+<moreInformation> init VAR 0 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -311,6 +353,7 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> moveSquare </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -326,6 +369,7 @@
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -334,10 +378,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> exit </identifier>
+<moreInformation> init VAR 1 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> exit </identifier>
+<moreInformation> use VAR 1 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -351,6 +397,7 @@
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -359,8 +406,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> square </identifier>
+<moreInformation> use FIELD 3 </moreInformation>
 <symbol> . </symbol>
 <identifier> decSize </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -376,6 +425,7 @@
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -384,8 +434,10 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> square </identifier>
+<moreInformation> use FIELD 3 </moreInformation>
 <symbol> . </symbol>
 <identifier> incSize </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
@@ -401,6 +453,7 @@
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -409,10 +462,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> direction </identifier>
+<moreInformation> init FIELD 4 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> exit </identifier>
+<moreInformation> use VAR 1 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -426,6 +481,7 @@
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -434,10 +490,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> direction </identifier>
+<moreInformation> init FIELD 4 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -451,6 +509,7 @@
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -459,10 +518,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> direction </identifier>
+<moreInformation> init FIELD 4 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> square </identifier>
+<moreInformation> use FIELD 3 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -476,6 +537,7 @@
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -484,10 +546,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> direction </identifier>
+<moreInformation> init FIELD 4 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> direction </identifier>
+<moreInformation> use FIELD 4 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -501,6 +565,7 @@
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ) </symbol>
@@ -509,10 +574,12 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> key </identifier>
+<moreInformation> init VAR 0 </moreInformation>
 <symbol> = </symbol>
 <expression>
 <term>
 <identifier> key </identifier>
+<moreInformation> use VAR 0 </moreInformation>
 </term>
 </expression>
 <symbol> ; </symbol>
@@ -520,6 +587,7 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> moveSquare </identifier>
+<moreInformation> use SUBROUTINE </moreInformation>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>

@@ -3,6 +3,9 @@ package compilationEngine
 import jackTokenizer.JackTokenizer
 import jackTokenizer.Keyword
 import jackTokenizer.Token
+import symbolTable.SymbolTable
+
+val symbolTable = SymbolTable()
 
 class CompilationEngine(private val jackTokenizer: JackTokenizer) {
     private val codes = mutableListOf<String>()
@@ -10,11 +13,12 @@ class CompilationEngine(private val jackTokenizer: JackTokenizer) {
         get() = jackTokenizer.currentToken
 
     fun compileClass(): List<String> {
-        codes.add("<class>")
+        symbolTable.init()
         jackTokenizer.advance()
         addMustString(currentToken.isKeywordIt(Keyword.CLASS))
         jackTokenizer.advance()
         addMustString(currentToken.isIdentifier())
+        symbolTable.setClassName(currentToken.value)
         jackTokenizer.advance()
         addMustString(currentToken.isSymbolIt('{'))
         jackTokenizer.advance()
@@ -25,13 +29,12 @@ class CompilationEngine(private val jackTokenizer: JackTokenizer) {
             jackTokenizer.advance()
         }
         addMustString(currentToken.isSymbolIt('}'))
-        codes.add("</class>")
         return codes
     }
 
     private fun addMustString(isWrite: Boolean = true) {
         if (isWrite) {
-            codes.add(jackTokenizer.getXMLString())
+            // codes.add(jackTokenizer.getXMLString())
         } else {
             throw RuntimeException(jackTokenizer.getXMLString())
         }
