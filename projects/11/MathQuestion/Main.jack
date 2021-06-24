@@ -1,0 +1,14 @@
+class Main {
+   function void main() {
+      var int inputValue;
+      do Output.printString("Q1. 2 + 3 = ?");
+      do Output.println();
+      do Output.printString("Q2. 6 + 12 = ?");
+      do Output.println();
+      let inputValue = Keyboard.readInt("answer Q1 : ");
+      do CheckAnswer.print(inputValue, 5);
+      let inputValue = Keyboard.readInt("answer Q2 : ");
+      do CheckAnswer.print(inputValue, 18);
+      return;
+   }
+}

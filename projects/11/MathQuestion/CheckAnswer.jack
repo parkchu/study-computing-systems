@@ -1,0 +1,14 @@
+class CheckAnswer {
+
+   function void print(int inputValue, int correctValue) {
+     if (inputValue = correctValue) {
+        do Output.printString("you are smart~");
+        do Output.println();
+      }
+      else {
+        do Output.printString("you are stupid");
+        do Output.println();
+      }
+     return;
+   }
+}
