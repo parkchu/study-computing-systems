@@ -8,29 +8,23 @@ class Main {
 
     /** Performs various mathematical operations, using calls to the Math class methods. */
     function void main() {
-
-        do Output.printInt(Math.max(5, 10));
-        do Output.printInt(Math.max(10, 5));
+        var String string;
+        let string = String.new(8);
+        do Output.printInt(string.length());
         do Output.println();
-
-        do Output.printInt(Math.min(5, 10));
-        do Output.printInt(Math.min(10, 5));
+        do string.appendChar(120);
+        do string.appendChar(121);
+        do string.appendChar(122);
+        do Output.printString(string);
         do Output.println();
-
-        do Output.printInt(Math.abs(-15));
-        do Output.printInt(Math.abs(15));
+        do Output.printInt(string.length());
         do Output.println();
-
-        do Output.printInt(Math.multiply(5, 10));
+        do string.setCharAt(0, 122);
+        do Output.printString(string);
         do Output.println();
-
-        do Output.printInt(Math.divide(10, 5));
-        do Output.printInt(Math.divide(5, 10));
+        do Output.printInt(23);
         do Output.println();
-
-        do Output.printInt(Math.sqrt(9));
-        do Output.printInt(Math.sqrt(5));
-        do Output.printInt(11 & 8);
+        do Output.printInt(12312);
         return;
     }
 }

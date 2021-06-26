@@ -122,6 +122,21 @@ label IF_TRUE0
 push constant 0
 return
 label IF_FALSE0
+push local 2
+push constant 14
+push static 0
+add
+pop pointer 1
+push that 0
+push constant 1
+sub
+gt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 1
+return
+label IF_FALSE1
 push argument 0
 push argument 1
 push argument 1
@@ -140,22 +155,22 @@ call Math.multiply 2
 sub
 push local 2
 lt
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
 push local 0
 push local 0
 add
 pop local 3
-goto IF_END1
-label IF_FALSE1
+goto IF_END2
+label IF_FALSE2
 push local 0
 push local 0
 add
 push constant 1
 add
 pop local 3
-label IF_END1
+label IF_END2
 push local 3
 push constant 0
 gt
@@ -170,13 +185,13 @@ and
 and
 push constant 0
 lt
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
 push local 3
 neg
 pop local 3
-label IF_FALSE2
+label IF_FALSE3
 push local 3
 return
 function Math.sqrt 4

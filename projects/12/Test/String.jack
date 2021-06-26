@@ -11,25 +11,20 @@
  * string-oriented operations.
  */
 class String {
-    field int length, max;
+    field int length;
     field Array chars;
 
     /** constructs a new empty string with a maximum length of maxLength
      *  and initial length of 0. */
     constructor String new(int maxLength) {
         let length = 0;
-        let max = maxLength;
-        if (maxLength > 0) {
-            let chars = Array.new(maxLength);
-        }
+        let chars = Array.new(maxLength);
         return this;
     }
 
     /** Disposes this string. */
     method void dispose() {
-        if (max > 0) {
-             do chars.dispose();
-        }
+        do chars.dispose();
         let length = 0;
         return;
     }
@@ -68,18 +63,11 @@ class String {
      *  until a non-digit character is detected. */
     method int intValue() {
         var int time, result;
+        let time = 0;
         let result = 0;
-        if (chars[0] = 45) {
-            let time = 1;
-        } else {
-            let time = 0;
-        }
         while (time < length) {
-            let result = result * 10 + chars[time] - 48;
+            let result = result * 10 + chars[time];
             let time = time + 1;
-        }
-        if (chars[0] = 45) {
-            return -result;
         }
         return result;
     }
@@ -99,17 +87,13 @@ class String {
     }
 
     function String int2String(int val) {
-        var int lastDigit, absVal;
+        var int lastDigit;
         var char c;
         var String string;
-        let absVal = Math.abs(val);
-        let lastDigit = absVal - ((absVal / 10) * 10);
+        let lastDigit = val - ((val / 10) * 10);
         let c = (lastDigit + 48);
-        if (absVal < 10) {
-            let string = String.new(6);
-            if (val < 0) {
-                do string.appendChar(45);
-            }
+        if (val < 10) {
+            let string = String.new(5);
             do string.appendChar(c);
             return string;
         } else {
