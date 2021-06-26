@@ -60,35 +60,27 @@
      *  the Jack expressions x/y and divide(x,y) return the same value.
      */
     function int divide(int x, int y) {
-        var int q, absX, absY, result;
-        let absX = Math.abs(x);
+        var int q, absY;
         let absY = Math.abs(y);
-        if (absY > absX) {
+        if (absY > x) {
             return 0;
         }
         let q = Math.divide(x, y + y);
-        let q = Math.abs(q);
-        
-        if (absX-(2 * q * absY) < absY) {
-            let result = q + q;
+        if (x-(2 * q * y) < y) {
+            return 2 * q;
         } else {
-            let result = q + q + 1;   
+            return 2 * q + 1;   
         }
-        if ((result > 0) & ((~(x & y) & (x | y))) < 0) {
-            let result = -result;
-        }
-        return result; 
     }
 
     /** Returns the integer part of the square root of x. */
     function int sqrt(int x) {
-        var int y, j, sum, squareSum;
+        var int y, j, sum;
         let y = 0;
         let j = 7;
         while (j > -1) {
             let sum = y + twoToThe[j];
-            let squareSum = sum * sum;
-            if (((squareSum < x) | (squareSum = x)) & (squareSum > 0)) {
+            if (Math.multiply(sum, sum) < (x + 1) & Math.multiply(sum, sum) > 0) {
                 let y = sum;
             }
             let j = j - 1;

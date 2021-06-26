@@ -1,0 +1,36 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/MathTest/Main.jack
+
+/** Test program for the OS Math class. */
+class Main {
+
+    /** Performs various mathematical operations, using calls to the Math class methods. */
+    function void main() {
+
+        do Output.printInt(Math.max(5, 10));
+        do Output.printInt(Math.max(10, 5));
+        do Output.println();
+
+        do Output.printInt(Math.min(5, 10));
+        do Output.printInt(Math.min(10, 5));
+        do Output.println();
+
+        do Output.printInt(Math.abs(-15));
+        do Output.printInt(Math.abs(15));
+        do Output.println();
+
+        do Output.printInt(Math.multiply(5, 10));
+        do Output.println();
+
+        do Output.printInt(Math.divide(10, 5));
+        do Output.printInt(Math.divide(5, 10));
+        do Output.println();
+
+        do Output.printInt(Math.sqrt(9));
+        do Output.printInt(Math.sqrt(5));
+        do Output.printInt(11 & 8);
+        return;
+    }
+}
