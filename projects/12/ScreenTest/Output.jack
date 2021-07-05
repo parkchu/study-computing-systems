@@ -207,13 +207,13 @@ class Output {
             }
             let time1 = time1 + 1;
         }
-        if (cursorColumn = 504) {
+        if ((cursorRow = 242) & (cursorColumn = 504)) {
+            let cursorRow = 0;
             let cursorColumn = -8;
-            if (cursorRow = 242) {
-                let cursorRow = 0;
-            } else {
-                let cursorRow = cursorRow + 11;
-            }
+        }
+        if (cursorColumn = 504) {
+            let cursorRow = cursorRow + 11;
+            let cursorColumn = -8;
         }
         do Output.moveCursor(cursorRow / 11, cursorColumn / 8 + 1);
         return;

@@ -66,9 +66,6 @@
         if (absY > absX) {
             return 0;
         }
-        if (absY > (twoToThe[14] - 1)) {
-            return 1;
-        }
         let q = Math.divide(x, y + y);
         let q = Math.abs(q);
         
@@ -117,9 +114,5 @@
 
     function boolean bit(int x, int j) {
         return ~(x & twoToThe[j] = 0);
-    }
-
-    function int twoToTheAt(int index) {
-        return twoToThe[index];
     }
 }
